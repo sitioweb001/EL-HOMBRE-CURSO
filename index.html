@@ -1,0 +1,1135 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Repositorio de Pruebas - Hacker Ético INS-UGB</title>
+    
+    <link id="favicon1" rel="icon" type="image/svg+xml" href="logoNetAcad_Vertical.svg">
+    <link id="favicon2" rel="shortcut icon" type="image/svg+xml" href="logoNetAcad_Vertical.svg">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root[data-theme="light"] {
+            --bg-body: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --accent: #0ea5e9;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --sidebar-bg: #0b0f19;
+            --sidebar-text: #e2e8f0;
+            --card-bg: #ffffff;
+            --border-color: #e2e8f0;
+            --glass-bg: rgba(255, 255, 255, 0.85);
+            --opcion-bg: #f8fafc;
+            --resp-bg: #f1f5f9;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-body: #0f172a;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #6366f1;
+            --primary-hover: #818cf8;
+            --accent: #38bdf8;
+            --success: #34d399;
+            --danger: #f87171;
+            --warning: #fbbf24;
+            --sidebar-bg: #020617;
+            --sidebar-text: #e2e8f0;
+            --card-bg: #1e293b;
+            --border-color: #334155;
+            --glass-bg: rgba(30, 41, 59, 0.85);
+            --opcion-bg: #0f172a;
+            --resp-bg: #0f172a;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg-body);
+            color: var(--text-main);
+            padding: 20px;
+            padding-top: 80px;
+            padding-right: 120px;
+            transition: background 0.4s, color 0.4s, margin-left 0.3s;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Controles Superiores */
+        .top-controls {
+            position: fixed;
+            top: 20px; left: 20px; right: 20px;
+            display: flex; justify-content: space-between;
+            z-index: 1000; pointer-events: none;
+        }
+        .hamburger, .theme-toggle {
+            pointer-events: auto; font-size: 20px; background: var(--card-bg);
+            color: var(--text-main); border: 1px solid var(--border-color);
+            padding: 10px 15px; border-radius: 12px; cursor: pointer;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); transition: all 0.2s ease;
+        }
+        .hamburger:hover, .theme-toggle:hover { transform: translateY(-2px); border-color: var(--primary); }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed; top: 0; left: -380px; width: 380px; height: 100%;
+            background: var(--sidebar-bg); color: var(--sidebar-text);
+            padding: 80px 20px 20px; overflow-y: auto;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 999; box-shadow: 4px 0 25px rgba(0,0,0,0.5);
+        }
+        .sidebar.open { left: 0; }
+        .sidebar .sidebar-logo {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 25px; padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .sidebar .sidebar-logo img {
+            height: 32px;
+            width: auto;
+            transition: filter 0.3s ease;
+        }
+        .sidebar .sidebar-logo span {
+            font-size: 1.1rem; font-weight: 700; color: #ffffff;
+        }
+        .sidebar h2 {
+            font-size: 1.1rem; color: var(--accent); margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;
+        }
+        .sidebar ul { list-style: none; }
+
+        .modulo-header {
+            font-weight: 600; padding: 12px; border-radius: 8px; cursor: pointer;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255,255,255,0.03); margin-bottom: 5px; transition: 0.2s;
+            font-size: 0.95rem; line-height: 1.3; color: #e2e8f0;
+        }
+        .modulo-header:hover { background: rgba(255,255,255,0.08); }
+        .modulo-header .arrow { transition: transform 0.3s; font-size: 0.8rem; margin-left: 10px; flex-shrink: 0; color: #94a3b8; }
+        .modulo-header .arrow.down { transform: rotate(90deg); }
+        .modulo-header .modulo-estado { font-size: 0.7em; opacity: 0.6; color: #94a3b8; }
+        .subitems { max-height: 0; overflow: hidden; transition: max-height 0.4s ease-out; padding-left: 10px; }
+        .subitems.open { max-height: 600px; margin-bottom: 15px; }
+        .subitems li a {
+            color: #94a3b8; text-decoration: none; font-size: 0.9rem; display: block;
+            padding: 8px 12px; border-radius: 6px; cursor: pointer; transition: 0.2s;
+            border-left: 3px solid transparent; margin: 4px 0;
+        }
+        .subitems li a:hover { color: white; background: rgba(255,255,255,0.05); }
+        .subitems li a.active { color: var(--accent); border-left-color: var(--accent); background: rgba(56, 189, 248, 0.1); }
+        .module-disabled { opacity: 0.5; cursor: default; }
+        .module-disabled:hover { background: rgba(255,255,255,0.03); }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+            z-index: 998; opacity: 0; pointer-events: none; transition: 0.3s;
+        }
+        .overlay.active { opacity: 1; pointer-events: all; }
+
+        /* Contenedor Principal */
+        .container { max-width: 950px; margin: 0 auto; }
+
+        /* Logo en el encabezado */
+        .header-logo {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 10px;
+        }
+        .header-logo img {
+            height: 40px;
+            width: auto;
+            transition: filter 0.3s ease;
+        }
+        .header-logo h1 {
+            font-size: 2.2rem; font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* === INVERSIÓN DE COLORES PARA MODO OSCURO (LOGOS) === */
+        :root[data-theme="dark"] .sidebar-logo img,
+        :root[data-theme="dark"] .header-logo img {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Dashboard */
+        #newsDashboard { animation: fadeIn 0.5s ease-out; }
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 30px; }
+        .news-card {
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 16px; padding: 24px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .news-card.clickable { cursor: pointer; }
+        .news-card.clickable:hover { transform: translateY(-5px); border-color: var(--primary); box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.15); }
+        .news-card h3 { color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; font-size: 1.1rem; line-height: 1.4; }
+        .news-card p { color: var(--text-muted); font-size: 0.95rem; }
+        .badge-new { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 4px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: bold; white-space: nowrap; }
+
+        /* Sección de Preguntas */
+        #questionsSection { display: none; animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .section-title { color: var(--text-main); font-size: 1.3rem; font-weight: 700; margin: 30px 0 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        
+        .question-card {
+            background: var(--card-bg); border-radius: 16px; border: 1px solid var(--border-color);
+            margin-bottom: 20px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: 0.3s;
+        }
+        .question-card:hover { border-color: #cbd5e1; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .question-header { padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; }
+        .question-card:has(.question-body.open) .question-header { border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.01); }
+        .q-title { font-weight: 600; font-size: 1.05rem; }
+        .q-badge { background: rgba(79, 70, 229, 0.1); color: var(--primary); padding: 4px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: bold; white-space: nowrap; margin-left: 10px; }
+        
+        .question-body { padding: 0 24px; max-height: 0; opacity: 0; overflow: hidden; transition: all 0.4s ease-out; }
+        .question-body.open { padding: 24px; max-height: 3000px; opacity: 1; }
+        .enunciado { font-size: 1.1rem; font-weight: 500; margin-bottom: 15px; color: var(--text-main); }
+
+        .opcion {
+            padding: 12px 16px 12px 40px; position: relative; background: var(--opcion-bg);
+            border: 1px solid var(--border-color); border-radius: 8px; margin-bottom: 10px; color: var(--text-muted); font-weight: 500; transition: all 0.2s;
+        }
+        .opcion::before {
+            content: ""; position: absolute; left: 16px; top: 50%; transform: translateY(-50%);
+            width: 12px; height: 12px; border: 2px solid var(--text-muted); border-radius: 50%;
+        }
+        .opcion.correcta { border-color: var(--success); color: var(--success); background: rgba(16, 185, 129, 0.05); }
+        .opcion.correcta::before { border-color: var(--success); background: var(--success); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2); }
+        .opcion.incorrecta { border-color: var(--danger); color: var(--danger); background: rgba(239, 68, 68, 0.05); }
+        .opcion.incorrecta::before { border-color: var(--danger); background: var(--danger); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); }
+
+        .respuesta-area { margin-top: 20px; padding: 20px; background: var(--resp-bg); border-radius: 12px; border-left: 4px solid var(--primary); display: none; }
+        .respuesta-area.visible { display: block; animation: fadeIn 0.3s; }
+        .label { font-weight: bold; color: var(--text-main); font-size: 0.9rem; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .explicacion { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 15px; }
+        .explicacion.incorrecta { border-left: 3px solid var(--danger); padding-left: 12px; margin: 8px 0; background: var(--card-bg); padding: 10px; border-radius: 0 8px 8px 0; }
+
+        /* Tablas Emparejamiento */
+        .match-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin: 15px 0; }
+        .match-table th, .match-table td { padding: 12px; text-align: left; border-bottom: 1px solid var(--border-color); color: var(--text-muted); }
+        .match-table th { background: rgba(0,0,0,0.03); color: var(--text-main); font-weight: 600; }
+        .match-table tr:last-child td { border-bottom: none; }
+
+        /* Menú Flotante Derecho */
+        .right-actions {
+            position: fixed; top: 50%; right: 20px; transform: translateY(-50%);
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            padding: 12px 8px; border-radius: 16px; display: flex; flex-direction: column; gap: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid var(--border-color);
+            z-index: 997; display: none; animation: slideLeft 0.4s ease;
+        }
+        @keyframes slideLeft { from { opacity: 0; transform: translate(20px, -50%); } to { opacity: 1; transform: translate(0, -50%); } }
+
+        .right-actions button {
+            background: transparent; border: none; color: var(--text-main); padding: 10px;
+            border-radius: 10px; cursor: pointer; font-size: 13px; display: flex; flex-direction: column; align-items: center; gap: 5px;
+            transition: 0.2s; width: 85px; text-align: center; line-height: 1.2; font-family: inherit; font-weight: 600;
+        }
+        .right-actions button:hover { background: rgba(125, 125, 125, 0.1); transform: scale(1.05); }
+        .right-actions button span { font-size: 22px; }
+
+        .contador-flotante { font-size: 0.75rem; color: var(--primary); text-align: center; font-weight: bold; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; margin-bottom: 5px; }
+
+        @media (max-width: 850px) {
+            body { padding-right: 20px; padding-bottom: 100px; }
+            .right-actions {
+                top: auto; bottom: 20px; right: 50%; transform: translateX(50%);
+                flex-direction: row; width: 95%; max-width: 500px; padding: 10px; justify-content: space-around;
+            }
+            .right-actions button { width: auto; font-size: 11px; padding: 8px; }
+            @keyframes slideLeft { from { opacity: 0; transform: translate(50%, 20px); } to { opacity: 1; transform: translate(50%, 0); } }
+            .contador-flotante { display: none; }
+            .header-logo h1 { font-size: 1.5rem; }
+            .header-logo img { height: 30px; }
+        }
+        @media (max-width: 480px) {
+            .header-logo h1 { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-controls">
+        <button class="hamburger" id="hamburgerBtn">☰ Menú</button>
+        <button class="theme-toggle" id="themeBtn">🌙</button>
+    </div>
+
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <img src="logoNetAcad_Vertical.svg" alt="NetAcad Logo" onerror="this.style.display='none'">
+            <span>NetAcad</span>
+        </div>
+        <h2>📚 Módulos del Curso</h2>
+        <ul id="menuModulos"></ul>
+    </nav>
+    <div class="overlay" id="overlay"></div>
+
+    <div class="container">
+        
+        <div id="newsDashboard">
+            <div class="header-logo">
+                <img src="logoNetAcad_Vertical.svg" alt="NetAcad Logo" onerror="this.style.display='none'">
+                <h1>Panel de Novedades</h1>
+            </div>
+            <p style="color: var(--text-muted);">Bienvenido al repositorio. Entérate de las últimas actualizaciones y selecciona un módulo para iniciar.</p>
+            
+            <div class="news-grid">
+                <div class="news-card clickable" onclick="showQuestions(1, 'all')">
+                    <h3>🚀 Módulo 1: Introducción a la Piratería Ética y Pruebas de Penetración <span class="badge-new">¡ACTIVO!</span></h3>
+                    <p>Haz clic aquí para acceder a todas las prácticas, mini tests y el examen final de este módulo. ¡Pon a prueba tus conocimientos!</p>
+                </div>
+                <div class="news-card">
+                    <h3>⏳ Próximos Módulos en Desarrollo</h3>
+                    <p>Los módulos del 2 al 10 (Planificación, Análisis de Vulnerabilidades, Ingeniería Social, etc.) se irán desbloqueando progresivamente a medida que avance el curso.</p>
+                </div>
+                <div class="news-card">
+                    <h3>📊 Estadísticas del Módulo 1</h3>
+                    <p><strong>30 preguntas</strong> disponibles: 5 verificaciones, 25 examen final. ¡Practica todas las veces que quieras!</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="questionsSection">
+            <div class="header-logo">
+                <img src="logoNetAcad_Vertical.svg" alt="NetAcad Logo" onerror="this.style.display='none'">
+                <h1 id="moduleTitle">Módulo 1</h1>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Haz clic en una pregunta para expandirla o usa el menú lateral para gestionar respuestas masivamente.</p>
+            <div id="questionsContainer"></div>
+        </div>
+
+    </div>
+
+    <div class="right-actions" id="rightActions">
+        <div class="contador-flotante" id="preguntasContador">0 Preg.</div>
+        <button data-action="show-answer"><span>📌</span> Ver<br>Respuesta</button>
+        <button data-action="show-others"><span>🔍</span> Analizar<br>Opciones</button>
+        <button data-action="why"><span>❓</span> Por qué<br>fallan</button>
+        <button data-action="reset"><span>🔄</span> Ocultar<br>todo</button>
+    </div>
+
+    <script>
+        // ============================================================
+        // DATOS DE PREGUNTAS (Módulo 1 - 30 preguntas)
+        // ============================================================
+        const preguntas = [
+            // --- Verificaciones (5) ---
+            {
+                id: 'v1', categoria: 'verificacion', subcategoria: 'minitest',
+                titulo: 'Verificación - Bolsas de trabajo',
+                enunciado: '¿Qué tres bolsas de trabajo en Internet permiten filtrar las ofertas de trabajo por antigüedad o nivel de experiencia? (Escoja tres opciones.)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'glassdoor.com', correcta: true },
+                    { texto: 'indeed.com', correcta: true },
+                    { texto: 'empleos en LinkedIn.com', correcta: true },
+                    { texto: 'monster.com', correcta: false }
+                ],
+                respuesta: 'glassdoor.com, indeed.com, empleos en LinkedIn.com',
+                explicacion_incorrectas: { 'monster.com': 'Aunque es una plataforma de empleo conocida, no se menciona en el contexto del laboratorio como una que permita filtrar por nivel de experiencia.' },
+                respuesta_ampliada: 'Las tres plataformas que sí permiten filtrar por nivel de experiencia son glassdoor.com, indeed.com y empleos en LinkedIn.com.'
+            },
+            {
+                id: 'v2', categoria: 'verificacion', subcategoria: 'practica',
+                titulo: 'Práctica - Tipos de pruebas de penetración',
+                enunciado: 'Protego ha sido contratado para realizar una prueba de infraestructura de red. ¿A qué se enfocará? (Escoja tres opciones.)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'máquinas virtuales (VM) que se ejecutan en la nube', correcta: false },
+                    { texto: 'la tienda digital', correcta: false },
+                    { texto: 'conmutadores', correcta: true },
+                    { texto: 'Dispositivos IPS', correcta: true },
+                    { texto: 'servidores AAA', correcta: true }
+                ],
+                respuesta: 'conmutadores, Dispositivos IPS, servidores AAA',
+                explicacion_incorrectas: {
+                    'máquinas virtuales (VM) que se ejecutan en la nube': 'Corresponde a pruebas de penetración en la nube.',
+                    'la tienda digital': 'Podría estar relacionado con pruebas basadas en aplicaciones web.'
+                },
+                respuesta_ampliada: 'Una prueba de infraestructura de red incluye conmutadores, IPS y servidores AAA, según el módulo 1.2.3.'
+            },
+            {
+                id: 'v3', categoria: 'verificacion', subcategoria: 'practica',
+                titulo: 'Práctica - Requisitos laboratorio',
+                enunciado: '¿Qué procedimientos recomendados seguirá al configurar un laboratorio de pentesting? (Escoja tres opciones.)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'Garantizar el acceso cerrado a la red e Internet.', correcta: true },
+                    { texto: 'Crear un entorno informático virtualizado.', correcta: true },
+                    { texto: 'Proporcionar suficientes recursos de hardware.', correcta: true },
+                    { texto: 'Utilizar la misma herramienta para obtener resultados uniformes.', correcta: false },
+                    { texto: 'Probar con un sistema operativo común.', correcta: false },
+                    { texto: 'Utilizar objetivos reforzados para pruebas más desafiantes.', correcta: false }
+                ],
+                respuesta: 'Acceso cerrado, entorno virtualizado, suficientes recursos de hardware',
+                explicacion_incorrectas: {
+                    'Utilizar la misma herramienta para obtener resultados uniformes.': 'La tabla recomienda herramientas duplicadas.',
+                    'Probar con un sistema operativo común.': 'La tabla recomienda múltiples sistemas operativos.',
+                    'Utilizar objetivos reforzados para pruebas más desafiantes.': 'La tabla recomienda objetivos vulnerables a propósito.'
+                },
+                respuesta_ampliada: 'Los tres requisitos correctos son: red cerrada, entorno virtualizado y suficientes recursos de hardware, según la tabla 1.3.2.'
+            },
+            {
+                id: 'v4', categoria: 'verificacion', subcategoria: 'practica',
+                titulo: 'Práctica - Implementación de Kali (Verificación)',
+                enunciado: 'Acaba de instalar VirtualBox/UTM, inicia la app, pero no ve la VM de Kali. ¿Qué paso olvidaste?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Actualizar los archivos de instalación.', correcta: false },
+                    { texto: 'Descargar e importar o ejecutar el archivo de VM de Kali.', correcta: true },
+                    { texto: 'Reinstalar VirtualBox/UTM.', correcta: false },
+                    { texto: 'Navegar a kali.org desde VirtualBox/UTM.', correcta: false }
+                ],
+                respuesta: 'Descargar e importar o ejecutar el archivo de VM de Kali.',
+                explicacion_incorrectas: {
+                    'Actualizar los archivos de instalación.': 'La versión del software no es el problema.',
+                    'Reinstalar VirtualBox/UTM.': 'No soluciona la falta de importación de la VM.',
+                    'Navegar a kali.org desde VirtualBox/UTM.': 'Las VM se descargan, no se navegan dentro del software.'
+                },
+                respuesta_ampliada: 'Olvidaste descargar e importar el archivo OVA (para VirtualBox) o el .utm (para UTM).'
+            },
+            {
+                id: 'v5', categoria: 'verificacion', subcategoria: 'practica',
+                titulo: 'Práctica - Investigación de Kali (Verificación)',
+                enunciado: 'Inicias Kali y abres una terminal. ¿Qué devuelve el comando pwd?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: '/home', correcta: false },
+                    { texto: '/kali/~', correcta: false },
+                    { texto: '/home/kali', correcta: true },
+                    { texto: '/raíz/kali', correcta: false }
+                ],
+                respuesta: '/home/kali',
+                explicacion_incorrectas: {
+                    '/home': 'Es el directorio que contiene las carpetas de usuarios, no el de kali.',
+                    '/kali/~': 'Ruta inválida en Linux.',
+                    '/raíz/kali': '/root es el directorio del usuario root, no de kali.'
+                },
+                respuesta_ampliada: 'El directorio de inicio del usuario kali es /home/kali.'
+            },
+
+            // --- Examen final (25 preguntas) ---
+            {
+                id: 'e1', categoria: 'examen', titulo: 'Pregunta 1 - Hacker ético',
+                enunciado: '¿Qué afirmación describe mejor el término hacker ético?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Motivado financieramente para explotar objetivos', correcta: false },
+                    { texto: 'Busca expresar algo o promover lo que cree', correcta: false },
+                    { texto: 'Usa herramientas diferentes a las de hackers no éticos', correcta: false },
+                    { texto: 'Imita a un atacante para evaluar la postura de seguridad', correcta: true }
+                ],
+                respuesta: 'Imita a un atacante para evaluar la postura de seguridad',
+                explicacion_incorrectas: {
+                    'Motivado financieramente...': 'Describe al crimen organizado.',
+                    'Busca expresar algo...': 'Describe a un hacktivista.',
+                    'Usa herramientas diferentes...': 'Los hackers éticos usan las mismas herramientas; la diferencia es el permiso.'
+                },
+                respuesta_ampliada: 'Un hacker ético actúa como atacante con permiso para mejorar la seguridad.'
+            },
+            {
+                id: 'e2', categoria: 'examen', titulo: 'Pregunta 2 - Crimen organizado',
+                enunciado: '¿Qué actor de amenazas es un grupo bien financiado que usa técnicas avanzadas para ganancias financieras?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Atacantes patrocinados por el estado', correcta: false },
+                    { texto: 'Crimen organizado', correcta: true },
+                    { texto: 'Amenaza interna', correcta: false },
+                    { texto: 'Hacktivista', correcta: false }
+                ],
+                respuesta: 'Crimen organizado',
+                explicacion_incorrectas: {
+                    'Atacantes patrocinados por el estado': 'Su fin es el espionaje, no el dinero.',
+                    'Amenaza interna': 'No son grupos externos bien financiados.',
+                    'Hacktivista': 'Motivación política/social, no económica.'
+                },
+                respuesta_ampliada: 'El crimen organizado busca monetizar sus ataques mediante ransomware, robo de datos, etc.'
+            },
+            {
+                id: 'e3', categoria: 'examen', titulo: 'Pregunta 3 - Hacktivista',
+                enunciado: '¿Qué actor roba datos y los revela públicamente para avergonzar?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Amenaza interna', correcta: false },
+                    { texto: 'Atacantes patrocinados por el estado', correcta: false },
+                    { texto: 'Hacktivista', correcta: true },
+                    { texto: 'Crimen organizado', correcta: false }
+                ],
+                respuesta: 'Hacktivista',
+                explicacion_incorrectas: {
+                    'Amenaza interna': 'No siempre busca divulgación pública.',
+                    'Atacantes patrocinados por el estado': 'Buscan espionaje, no propaganda.',
+                    'Crimen organizado': 'Busca beneficio económico.'
+                },
+                respuesta_ampliada: 'Los hacktivistas actúan por motivos políticos o sociales, robando y filtrando datos para avergonzar.'
+            },
+            {
+                id: 'e4', categoria: 'examen', titulo: 'Pregunta 4 - Ataque patrocinado por el estado',
+                enunciado: '¿Qué es un ataque patrocinado por el estado?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Empleados descontentos', correcta: false },
+                    { texto: 'Grupo financiado para ganancias', correcta: false },
+                    { texto: 'Gobiernos que roban información o interrumpen', correcta: true },
+                    { texto: 'Robo para avergonzar públicamente', correcta: false }
+                ],
+                respuesta: 'Gobiernos que roban información o interrumpen',
+                explicacion_incorrectas: {
+                    'Empleados descontentos': 'Eso es amenaza interna.',
+                    'Grupo financiado para ganancias': 'Crimen organizado.',
+                    'Robo para avergonzar públicamente': 'Hacktivista.'
+                },
+                respuesta_ampliada: 'Los ataques patrocinados por el estado son llevados a cabo por gobiernos con fines de espionaje o guerra cibernética.'
+            },
+            {
+                id: 'e5', categoria: 'examen', titulo: 'Pregunta 5 - Amenaza interna',
+                enunciado: '¿Qué es un ataque de amenaza interna?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Grupo financiado para ganancias', correcta: false },
+                    { texto: 'Empleados descontentos dentro de la organización', correcta: true },
+                    { texto: 'Robo para avergonzar públicamente', correcta: false },
+                    { texto: 'Gobiernos que roban información', correcta: false }
+                ],
+                respuesta: 'Empleados descontentos dentro de la organización',
+                explicacion_incorrectas: {
+                    'Grupo financiado para ganancias': 'Crimen organizado.',
+                    'Robo para avergonzar públicamente': 'Hacktivista.',
+                    'Gobiernos que roban información': 'Patrocinado por el estado.'
+                },
+                respuesta_ampliada: 'Las amenazas internas provienen de empleados o personas dentro de la organización, por malicia o error.'
+            },
+            {
+                id: 'e6', categoria: 'examen', titulo: 'Pregunta 6 - Pruebas basadas en aplicaciones',
+                enunciado: '¿Qué debilidad evalúan las pruebas de penetración basadas en aplicaciones?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Integridad en la nube', correcta: false },
+                    { texto: 'Seguridad del cortafuego', correcta: false },
+                    { texto: 'Implementación inalámbrica', correcta: false },
+                    { texto: 'Fallas lógicas', correcta: true }
+                ],
+                respuesta: 'Fallas lógicas',
+                explicacion_incorrectas: {
+                    'Integridad en la nube': 'Se evalúa en pruebas en la nube.',
+                    'Seguridad del cortafuego': 'Se evalúa en infraestructura de red.',
+                    'Implementación inalámbrica': 'Se evalúa en pruebas inalámbricas.'
+                },
+                respuesta_ampliada: 'Las pruebas basadas en aplicaciones evalúan fallas lógicas, configuraciones incorrectas, validación de entrada e inyección.'
+            },
+            {
+                id: 'e7', categoria: 'examen', titulo: 'Pregunta 7 - Recursos en infraestructura de red',
+                enunciado: '¿Qué dos recursos evalúa una prueba de infraestructura de red? (Elija dos)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'Bases de datos back-end', correcta: false },
+                    { texto: 'IPS', correcta: true },
+                    { texto: 'Proveedores de nube', correcta: false },
+                    { texto: 'Servidores web', correcta: false },
+                    { texto: 'Servidores AAA', correcta: true }
+                ],
+                respuesta: 'IPS, servidores AAA',
+                explicacion_incorrectas: {
+                    'Bases de datos back-end': 'Corresponde a pruebas de aplicaciones.',
+                    'Proveedores de nube': 'Corresponde a pruebas en la nube.',
+                    'Servidores web': 'Corresponde a pruebas de aplicaciones.'
+                },
+                respuesta_ampliada: 'La prueba de infraestructura de red incluye IPS y servidores AAA, además de conmutadores, routers y firewalls.'
+            },
+            {
+                id: 'e8', categoria: 'examen', titulo: 'Pregunta 8 - Recursos en pruebas de aplicaciones web',
+                enunciado: 'Al probar una aplicación web, ¿qué recurso adicional se debe evaluar?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Servicios en la nube', correcta: false },
+                    { texto: 'Bases de datos back-end', correcta: true },
+                    { texto: 'Servidores AAA', correcta: false },
+                    { texto: 'Conmutadores, routers y firewalls', correcta: false }
+                ],
+                respuesta: 'Bases de datos back-end',
+                explicacion_incorrectas: {
+                    'Servicios en la nube': 'Corresponde a pruebas en la nube.',
+                    'Servidores AAA': 'Corresponde a infraestructura de red.',
+                    'Conmutadores, routers y firewalls': 'Corresponde a infraestructura de red.'
+                },
+                respuesta_ampliada: 'Las aplicaciones web suelen tener una base de datos back-end, cuyo acceso debe ser probado.'
+            },
+            {
+                id: 'e9', categoria: 'examen', titulo: 'Pregunta 9 - Programas de recompensas por errores',
+                enunciado: '¿Cuál es el propósito de los programas de recompensas por errores?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Recompensar por encontrar vulnerabilidades', correcta: true },
+                    { texto: 'Recompensar por detectar actividades maliciosas', correcta: false },
+                    { texto: 'Recompensar por irrumpir en instalaciones físicas', correcta: false },
+                    { texto: 'Recompensar por corregir vulnerabilidades', correcta: false }
+                ],
+                respuesta: 'Recompensar por encontrar vulnerabilidades',
+                explicacion_incorrectas: {
+                    'Recompensar por detectar actividades maliciosas': 'Los bug bounties se centran en encontrar vulnerabilidades, no en detectar ataques en curso.',
+                    'Recompensar por irrumpir en instalaciones físicas': 'Eso es prueba de penetración física, no bug bounty.',
+                    'Recompensar por corregir vulnerabilidades': 'Los investigadores reportan, no corrigen.'
+                },
+                respuesta_ampliada: 'Los programas de recompensas por errores (bug bounties) recompensan a los investigadores por encontrar y reportar vulnerabilidades de manera responsable.'
+            },
+            {
+                id: 'e10', categoria: 'examen', titulo: 'Pregunta 10 - Entorno parcialmente conocido',
+                enunciado: '¿Qué caracteriza a una prueba de penetración en un entorno parcialmente conocido?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Sin conocimientos previos', correcta: false },
+                    { texto: 'Enfoque híbrido entre desconocido y conocido', correcta: true },
+                    { texto: 'Solo nombres de dominio e IPs', correcta: false },
+                    { texto: 'Probar la red eléctrica', correcta: false }
+                ],
+                respuesta: 'Enfoque híbrido entre desconocido y conocido',
+                explicacion_incorrectas: {
+                    'Sin conocimientos previos': 'Eso es entorno desconocido (caja negra).',
+                    'Solo nombres de dominio e IPs': 'También es entorno desconocido.',
+                    'Probar la red eléctrica': 'No es parte de las pruebas de seguridad de TI.'
+                },
+                respuesta_ampliada: 'El entorno parcialmente conocido (caja gris) es híbrido: se dan algunas credenciales pero no documentación completa.'
+            },
+            {
+                id: 'e11', categoria: 'examen', titulo: 'Pregunta 11 - Entorno conocido',
+                enunciado: '¿Qué caracteriza a una prueba de penetración en un entorno conocido?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Diagramas de red, IPs, configuraciones y credenciales', correcta: true },
+                    { texto: 'Solo nombres de dominio e IPs', correcta: false },
+                    { texto: 'Enfoque híbrido', correcta: false },
+                    { texto: 'Sin conocimientos previos', correcta: false }
+                ],
+                respuesta: 'Diagramas de red, IPs, configuraciones y credenciales',
+                explicacion_incorrectas: {
+                    'Solo nombres de dominio e IPs': 'Entorno desconocido.',
+                    'Enfoque híbrido': 'Entorno parcialmente conocido.',
+                    'Sin conocimientos previos': 'Entorno desconocido.'
+                },
+                respuesta_ampliada: 'En entorno conocido (caja blanca), el evaluador recibe información completa de la organización.'
+            },
+            {
+                id: 'e12', categoria: 'examen', titulo: 'Pregunta 12 - Entorno desconocido',
+                enunciado: '¿Qué prueba solo proporciona información limitada como dominios e IPs?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Entorno conocido', correcta: false },
+                    { texto: 'Entorno desconocido', correcta: true },
+                    { texto: 'OWASP WSTG', correcta: false },
+                    { texto: 'Entorno parcialmente conocido', correcta: false }
+                ],
+                respuesta: 'Entorno desconocido',
+                explicacion_incorrectas: {
+                    'Entorno conocido': 'Recibe mucha información.',
+                    'OWASP WSTG': 'Es una metodología, no un tipo de prueba.',
+                    'Entorno parcialmente conocido': 'Recibe información intermedia (credenciales).'
+                },
+                respuesta_ampliada: 'La prueba de entorno desconocido (caja negra) simula la perspectiva de un atacante externo con información mínima.'
+            },
+            {
+                id: 'e13', categoria: 'examen', titulo: 'Pregunta 13 - Emparejar metodologías',
+                enunciado: 'Haga coincidir la metodología con la descripción.',
+                tipo: 'emparejamiento',
+                match: [
+                    { metodo: 'NIST SP 800-115', descripcion: 'proporciona a las organizaciones pautas sobre la planificación y realización de pruebas de seguridad de la información' },
+                    { metodo: 'MITRE ATT & CK', descripcion: 'colección de matrices de tácticas y técnicas de adversarios' },
+                    { metodo: 'OSSTMM', descripcion: 'establece pruebas de seguridad repetibles y uniformes' },
+                    { metodo: 'PTES', descripcion: 'proporciona información sobre tipos de ataques y métodos' },
+                    { metodo: 'OWASP WSTG', descripcion: 'cubre las fases de alto nivel de las pruebas de seguridad de aplicaciones web' }
+                ],
+                respuesta: 'Tabla de coincidencias (ver tabla en pantalla)',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'NIST SP 800-115 → pautas; MITRE ATT & CK → matrices de tácticas; OSSTMM → pruebas repetibles; PTES → tipos de ataques; OWASP WSTG → aplicaciones web.'
+            },
+            {
+                id: 'e14', categoria: 'examen', titulo: 'Pregunta 14 - Fases PTES',
+                enunciado: '¿Qué tres opciones son fases del PTES? (Escoja tres)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'Asignación de red', correcta: false },
+                    { texto: 'Más enumeración', correcta: false },
+                    { texto: 'Informes', correcta: true },
+                    { texto: 'Explotación', correcta: true },
+                    { texto: 'Penetración', correcta: false },
+                    { texto: 'Modelado de amenazas', correcta: true }
+                ],
+                respuesta: 'Informes, Explotación, Modelado de amenazas',
+                explicacion_incorrectas: {
+                    'Asignación de red': 'Es fase de ISSAF.',
+                    'Más enumeración': 'Es fase de ISSAF.',
+                    'Penetración': 'Es fase de ISSAF; en PTES es "Explotación".'
+                },
+                respuesta_ampliada: 'Las 7 fases del PTES son: Interacciones previas, inteligencia, modelado de amenazas, análisis de vulnerabilidades, explotación, post-explotación e informes.'
+            },
+            {
+                id: 'e15', categoria: 'examen', titulo: 'Pregunta 15 - Fases ISSAF',
+                enunciado: '¿Qué dos opciones son fases del ISSAF? (Elija dos)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'Post-explotación', correcta: false },
+                    { texto: 'Interacciones previas al compromiso', correcta: false },
+                    { texto: 'Informes', correcta: false },
+                    { texto: 'Mantener el acceso', correcta: true },
+                    { texto: 'Identificación de vulnerabilidades', correcta: true }
+                ],
+                respuesta: 'Mantener el acceso, Identificación de vulnerabilidades',
+                explicacion_incorrectas: {
+                    'Post-explotación': 'Es fase de PTES.',
+                    'Interacciones previas al compromiso': 'Es fase de PTES.',
+                    'Informes': 'Es fase de PTES.'
+                },
+                respuesta_ampliada: 'Las fases de ISSAF incluyen: recopilación, mapeo de red, identificación de vulnerabilidades, penetración, acceso, más enumeración, comprometer usuarios, mantener acceso y cubrir pistas.'
+            },
+            {
+                id: 'e16', categoria: 'examen', titulo: 'Pregunta 16 - Fases OSSTMM',
+                enunciado: '¿Qué dos opciones son fases del OSSTMM? (Elija dos)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'Análisis de vulnerabilidades', correcta: false },
+                    { texto: 'Mapeo de red', correcta: false },
+                    { texto: 'Análisis de confianza', correcta: true },
+                    { texto: 'Flujo de Trabajo', correcta: true },
+                    { texto: 'Mantener el acceso', correcta: false }
+                ],
+                respuesta: 'Análisis de confianza, Flujo de Trabajo',
+                explicacion_incorrectas: {
+                    'Análisis de vulnerabilidades': 'Es fase de PTES y ISSAF.',
+                    'Mapeo de red': 'Es fase de ISSAF.',
+                    'Mantener el acceso': 'Es fase de ISSAF.'
+                },
+                respuesta_ampliada: 'OSSTMM incluye: Métricas de seguridad operativa, Análisis de confianza, Flujo de trabajo, pruebas humanas, físicas, inalámbricas, telecomunicaciones, redes de datos, reglas de cumplimiento e informes STAR.'
+            },
+            {
+                id: 'e17', categoria: 'examen', titulo: 'Pregunta 17 - Metodología para aplicaciones web',
+                enunciado: '¿Qué metodología es una guía completa centrada en aplicaciones web?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'OSSTMM', correcta: false },
+                    { texto: 'MITRE ATT & CK', correcta: false },
+                    { texto: 'OWASP WSTG', correcta: true },
+                    { texto: 'NIST SP 800-115', correcta: false }
+                ],
+                respuesta: 'OWASP WSTG',
+                explicacion_incorrectas: {
+                    'OSSTMM': 'Es un manual general.',
+                    'MITRE ATT & CK': 'Es una base de conocimiento de tácticas.',
+                    'NIST SP 800-115': 'Son pautas generales.'
+                },
+                respuesta_ampliada: 'OWASP WSTG es la guía más completa para pruebas de seguridad de aplicaciones web.'
+            },
+            {
+                id: 'e18', categoria: 'examen', titulo: 'Pregunta 18 - Distribución Linux de pentesting',
+                enunciado: '¿Qué opción es una distribución de Linux con herramientas de pentesting?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'PTES', correcta: false },
+                    { texto: 'BlackArch', correcta: true },
+                    { texto: 'SET', correcta: false },
+                    { texto: 'OWASP', correcta: false }
+                ],
+                respuesta: 'BlackArch',
+                explicacion_incorrectas: {
+                    'PTES': 'Es un estándar, no una distro.',
+                    'SET': 'Es una herramienta (Social Engineering Toolkit).',
+                    'OWASP': 'Es una organización.'
+                },
+                respuesta_ampliada: 'Las distribuciones Linux para pentesting incluyen Kali, Parrot OS y BlackArch.'
+            },
+            {
+                id: 'e19', categoria: 'examen', titulo: 'Pregunta 19 - URL de distribución Linux',
+                enunciado: '¿Qué URL es de una distribución Linux para pentesting?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'virtualbox.org', correcta: false },
+                    { texto: 'attack.mitre.org', correcta: false },
+                    { texto: 'vmware.com', correcta: false },
+                    { texto: 'parrotsec.org', correcta: true }
+                ],
+                respuesta: 'parrotsec.org',
+                explicacion_incorrectas: {
+                    'virtualbox.org': 'Es de VirtualBox (virtualización).',
+                    'attack.mitre.org': 'Es de MITRE ATT & CK.',
+                    'vmware.com': 'Es de VMware (virtualización).'
+                },
+                respuesta_ampliada: 'Parrot OS es una distribución Linux para pentesting, su sitio es parrotsec.org.'
+            },
+            {
+                id: 'e20', categoria: 'examen', titulo: 'Pregunta 20 - Monitoreo de estado de salud',
+                enunciado: '¿Qué significa el requisito "Monitoreo del estado de salud" en un laboratorio?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Acceso controlado a Internet', correcta: false },
+                    { texto: 'Asegurar recursos suficientes', correcta: false },
+                    { texto: 'Poder determinar las causas cuando algo falla', correcta: true },
+                    { texto: 'Usar herramientas duplicadas', correcta: false }
+                ],
+                respuesta: 'Poder determinar las causas cuando algo falla',
+                explicacion_incorrectas: {
+                    'Acceso controlado a Internet': 'Corresponde a "Red cerrada".',
+                    'Asegurar recursos suficientes': 'Corresponde a "Recursos de hardware".',
+                    'Usar herramientas duplicadas': 'Corresponde a "Herramientas duplicadas".'
+                },
+                respuesta_ampliada: 'El monitoreo del estado de salud permite al evaluador saber por qué falló algo durante las pruebas.'
+            },
+            {
+                id: 'e21', categoria: 'examen', titulo: 'Pregunta 21 - Herramienta para infraestructura de red',
+                enunciado: '¿Qué herramienta es útil para pruebas de infraestructura de red?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Escaneo de vulnerabilidades', correcta: false },
+                    { texto: 'Pruebas de aplicaciones móviles', correcta: false },
+                    { texto: 'Evitar cortafuegos e IPS', correcta: true },
+                    { texto: 'Interceptación de proxy', correcta: false }
+                ],
+                respuesta: 'Evitar cortafuegos e IPS',
+                explicacion_incorrectas: {
+                    'Escaneo de vulnerabilidades': 'Se usa en múltiples contextos, no específico.',
+                    'Pruebas de aplicaciones móviles': 'Para apps móviles.',
+                    'Interceptación de proxy': 'Para aplicaciones web.'
+                },
+                respuesta_ampliada: 'Las herramientas para evitar cortafuegos e IPS son clave en infraestructura de red.'
+            },
+            {
+                id: 'e22', categoria: 'examen', titulo: 'Pregunta 22 - Herramienta para pruebas de aplicaciones',
+                enunciado: '¿Qué herramienta se usa para pruebas basadas en aplicaciones?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Descifrar cifrado inalámbrico', correcta: false },
+                    { texto: 'Interceptación de proxy', correcta: true },
+                    { texto: 'Evitar cortafuegos e IPS', correcta: false },
+                    { texto: 'Rastreo de tráfico', correcta: false }
+                ],
+                respuesta: 'Interceptación de proxy',
+                explicacion_incorrectas: {
+                    'Descifrar cifrado inalámbrico': 'Para pruebas inalámbricas.',
+                    'Evitar cortafuegos e IPS': 'Para infraestructura de red.',
+                    'Rastreo de tráfico': 'No es la herramienta específica mencionada.'
+                },
+                respuesta_ampliada: 'Los proxies de intercepción (Burp Suite) son fundamentales para pruebas de aplicaciones web.'
+            },
+            {
+                id: 'e23', categoria: 'examen', titulo: 'Pregunta 23 - Herramientas para infraestructura inalámbrica',
+                enunciado: '¿Qué herramientas se usan para pruebas inalámbricas?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Intercepción de proxy', correcta: false },
+                    { texto: 'Manipulación de tráfico', correcta: false },
+                    { texto: 'Detección de vulnerabilidades web', correcta: false },
+                    { texto: 'Desautorización de dispositivos de red', correcta: true }
+                ],
+                respuesta: 'Desautorización de dispositivos de red',
+                explicacion_incorrectas: {
+                    'Intercepción de proxy': 'Para aplicaciones web.',
+                    'Manipulación de tráfico': 'Puede aplicarse a MITM, pero la opción específica es desautorización.',
+                    'Detección de vulnerabilidades web': 'Para aplicaciones web.'
+                },
+                respuesta_ampliada: 'Las pruebas inalámbricas usan herramientas para descifrar cifrado, desautorizar dispositivos y ataques MITM.'
+            },
+            {
+                id: 'e24', categoria: 'examen', titulo: 'Pregunta 24 - Herramientas para servidor/cliente',
+                enunciado: '¿Qué herramientas se usan para probar plataformas servidor y cliente?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Desautorización de dispositivos', correcta: false },
+                    { texto: 'Escaneo de vulnerabilidades', correcta: true },
+                    { texto: 'Interceptación de proxy', correcta: false },
+                    { texto: 'Descifrar cifrado inalámbrico', correcta: false }
+                ],
+                respuesta: 'Escaneo de vulnerabilidades',
+                explicacion_incorrectas: {
+                    'Desautorización de dispositivos': 'Inalámbrica.',
+                    'Interceptación de proxy': 'Aplicaciones web.',
+                    'Descifrar cifrado inalámbrico': 'Inalámbrica.'
+                },
+                respuesta_ampliada: 'Los escáneres de vulnerabilidades automatizados identifican software desactualizado y configuraciones incorrectas.'
+            },
+            {
+                id: 'e25', categoria: 'examen', titulo: 'Pregunta 25 - Sistema no virtualizable',
+                enunciado: 'Si no se puede virtualizar un sistema, ¿qué medida se debe tomar?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Reconstruir el sistema después de las pruebas', correcta: false },
+                    { texto: 'Una copia de respaldo completa del sistema', correcta: true },
+                    { texto: 'Un informe con reparaciones', correcta: false },
+                    { texto: 'Usar herramientas que no dañen', correcta: false }
+                ],
+                respuesta: 'Una copia de respaldo completa del sistema',
+                explicacion_incorrectas: {
+                    'Reconstruir el sistema...': 'Es más lento que restaurar una copia.',
+                    'Un informe con reparaciones': 'El informe es el resultado, no una medida preventiva.',
+                    'Usar herramientas que no dañen': 'Las herramientas pueden dañar, no hay garantía.'
+                },
+                respuesta_ampliada: 'Si no se puede virtualizar, se debe hacer una copia de seguridad completa del sistema para poder restaurarlo rápidamente.'
+            }
+        ];
+
+        // ============================================================
+        // CONFIGURACIÓN DE LOS 10 MÓDULOS (con nombres completos)
+        // ============================================================
+        const modulos = [
+            { numero: 1, nombre: 'Introducción a la Piratería Ética y las Pruebas de Penetración', tieneDatos: true },
+            { numero: 2, nombre: 'Planificación y Alcance de una Evaluación de Pruebas de Penetración', tieneDatos: false },
+            { numero: 3, nombre: 'Recopilación de Información y Análisis de Vulnerabilidades', tieneDatos: false },
+            { numero: 4, nombre: 'Ataques de Ingeniería Social', tieneDatos: false },
+            { numero: 5, nombre: 'Explotando Redes Cableadas e Inalámbricas', tieneDatos: false },
+            { numero: 6, nombre: 'Explotando Vulnerabilidades Basadas en Aplicaciones', tieneDatos: false },
+            { numero: 7, nombre: 'Seguridad en la Nube, Dispositivos Móviles e IdC', tieneDatos: false },
+            { numero: 8, nombre: 'Realización de Técnicas Posteriores a la Explotación', tieneDatos: false },
+            { numero: 9, nombre: 'Informes y Comunicación', tieneDatos: false },
+            { numero: 10, nombre: 'Herramientas y Análisis de Código', tieneDatos: false }
+        ];
+
+        // ============================================================
+        // ELEMENTOS DOM
+        // ============================================================
+        const newsDashboard = document.getElementById('newsDashboard');
+        const questionsSection = document.getElementById('questionsSection');
+        const rightActions = document.getElementById('rightActions');
+        const moduleTitle = document.getElementById('moduleTitle');
+
+        // ============================================================
+        // CONSTRUIR MENÚ
+        // ============================================================
+        function buildMenu() {
+            const menu = document.getElementById('menuModulos');
+            
+            // Inicio
+            const liInicio = document.createElement('li');
+            liInicio.innerHTML = `<div class="modulo-header" style="color:var(--accent);" onclick="showNews()">🏠 Inicio / Novedades</div>`;
+            menu.appendChild(liInicio);
+
+            modulos.forEach(mod => {
+                const li = document.createElement('li');
+                const header = document.createElement('div');
+                header.className = `modulo-header ${!mod.tieneDatos ? 'module-disabled' : ''}`;
+                
+                // Nombre completo del módulo sin abreviar
+                header.innerHTML = `
+                    📚 Módulo ${mod.numero}: ${mod.nombre}
+                    ${mod.tieneDatos ? '<span class="arrow">▶</span>' : '<span class="modulo-estado">(Próximamente)</span>'}
+                `;
+                li.appendChild(header);
+
+                if (mod.tieneDatos) {
+                    const subUl = document.createElement('ul');
+                    subUl.className = 'subitems';
+                    const subs = [
+                        { label: '🏠 Todas las preguntas', filter: 'all' },
+                        { label: '✅ Verificaciones de habilidades', filter: 'verificacion' },
+                        { label: '🧪 Prácticas de laboratorio', filter: 'practica' },
+                        { label: '📝 Examen final', filter: 'examen' },
+                        { label: '⚡ Mini tests', filter: 'minitest' }
+                    ];
+                    subs.forEach(sub => {
+                        const subLi = document.createElement('li');
+                        subLi.innerHTML = `<a data-filter="${sub.filter}">${sub.label}</a>`;
+                        subLi.querySelector('a').onclick = (e) => {
+                            e.preventDefault();
+                            showQuestions(mod.numero, sub.filter);
+                            toggleMenu(false);
+                            document.querySelectorAll('.subitems a').forEach(el => el.classList.remove('active'));
+                            e.target.classList.add('active');
+                        };
+                        subUl.appendChild(subLi);
+                    });
+                    li.appendChild(subUl);
+
+                    header.onclick = () => {
+                        const arrow = header.querySelector('.arrow');
+                        if (arrow) arrow.classList.toggle('down');
+                        subUl.classList.toggle('open');
+                    };
+                }
+                menu.appendChild(li);
+            });
+        }
+
+        // ============================================================
+        // NAVEGACIÓN
+        // ============================================================
+        function showNews() {
+            newsDashboard.style.display = 'block';
+            questionsSection.style.display = 'none';
+            rightActions.style.display = 'none';
+            toggleMenu(false);
+            document.querySelectorAll('.subitems a').forEach(el => el.classList.remove('active'));
+        }
+
+        function showQuestions(numModulo, filtro) {
+            newsDashboard.style.display = 'none';
+            questionsSection.style.display = 'block';
+            rightActions.style.display = 'flex';
+            
+            const txtFiltro = filtro === 'all' ? 'Todas las pruebas' :
+                              filtro === 'verificacion' ? 'Verificaciones de habilidades' :
+                              filtro === 'practica' ? 'Prácticas de laboratorio' :
+                              filtro === 'examen' ? 'Examen final' : 'Mini tests';
+            
+            moduleTitle.innerHTML = `Módulo ${numModulo} <span style="font-size:1.2rem; color:var(--text-muted); font-weight:500;">- ${txtFiltro}</span>`;
+            renderPreguntas(filtro);
+        }
+
+        // ============================================================
+        // RENDERIZAR PREGUNTAS
+        // ============================================================
+        function renderPreguntas(filtro) {
+            const container = document.getElementById('questionsContainer');
+            container.innerHTML = '';
+            
+            let filtered = filtro === 'all' ? preguntas : preguntas.filter(p => p.categoria === filtro || p.subcategoria === filtro);
+
+            if (filtered.length === 0) {
+                container.innerHTML = '<p style="padding:40px; text-align:center; background:var(--card-bg); border-radius:12px; border:1px solid var(--border-color);">No hay preguntas disponibles para este filtro.</p>';
+                document.getElementById('preguntasContador').textContent = '0 Preg.';
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement('div');
+                card.className = 'question-card';
+                
+                let bodyContent = `<div class="enunciado">${p.enunciado}</div>`;
+                
+                if (p.tipo === 'emparejamiento') {
+                    bodyContent += `<table class="match-table">
+                        <thead><tr><th>Metodología</th><th>Descripción</th></tr></thead>
+                        <tbody>${p.match.map(m => `<tr><td><strong>${m.metodo}</strong></td><td>${m.descripcion}</td></tr>`).join('')}</tbody>
+                    </table>`;
+                } else {
+                    bodyContent += `<div class="opciones">
+                        ${p.opciones.map(o => `<div class="opcion" data-correcta="${o.correcta}">${o.texto}</div>`).join('')}
+                    </div>`;
+                }
+
+                let respHtml = `<div class="label">✅ Respuesta correcta:</div><div class="explicacion"><strong>${p.respuesta}</strong></div>`;
+                if(p.respuesta_ampliada) {
+                    respHtml += `<div class="label" style="margin-top:16px;">📖 Explicación ampliada:</div><div class="explicacion">${p.respuesta_ampliada}</div>`;
+                }
+                respHtml += `<div class="label" style="margin-top:16px;">🔍 ¿Por qué fallan las demás?</div><div class="explicacion">`;
+                if (p.explicacion_incorrectas && Object.keys(p.explicacion_incorrectas).length > 0) {
+                    respHtml += Object.entries(p.explicacion_incorrectas).map(([op, ex]) => `<div class="explicacion incorrecta"><strong>${op}</strong><br>${ex}</div>`).join('');
+                } else {
+                    respHtml += `<span style="font-style:italic; opacity:0.7;">No aplica en este formato.</span>`;
+                }
+                respHtml += `</div>`;
+
+                card.innerHTML = `
+                    <div class="question-header">
+                        <span class="q-title">${p.titulo}</span>
+                        <span class="q-badge">${p.tipo === 'emparejamiento' ? 'Emparejamiento' : p.tipo === 'multiple' ? 'Múltiple' : 'Única'}</span>
+                    </div>
+                    <div class="question-body">
+                        ${bodyContent}
+                        <div class="respuesta-area">${respHtml}</div>
+                    </div>`;
+                
+                card.querySelector('.question-header').onclick = () => card.querySelector('.question-body').classList.toggle('open');
+                container.appendChild(card);
+            });
+            document.getElementById('preguntasContador').textContent = `${filtered.length} Preg.`;
+        }
+
+        // ============================================================
+        // BOTONES FLOTANTES
+        // ============================================================
+        ['show-answer', 'show-others', 'reset', 'why'].forEach(action => {
+            document.querySelector(`.right-actions button[data-action="${action}"]`).onclick = () => {
+                document.querySelectorAll('.question-card').forEach(card => {
+                    const body = card.querySelector('.question-body');
+                    const resp = body.querySelector('.respuesta-area');
+                    const ops = body.querySelectorAll('.opcion');
+                    
+                    if(action === 'reset') {
+                        resp.classList.remove('visible');
+                        ops.forEach(o => o.className = 'opcion');
+                    } else {
+                        body.classList.add('open');
+                        resp.classList.add('visible');
+                        ops.forEach(o => {
+                            const esCorrecta = o.dataset.correcta === 'true';
+                            if(action === 'show-answer' && esCorrecta) o.classList.add('correcta');
+                            if(action === 'show-others') o.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+                            if(action === 'why') o.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+                        });
+                    }
+                });
+            };
+        });
+
+        // ============================================================
+        // TEMA OSCURO Y MENÚ
+        // ============================================================
+        const themeBtn = document.getElementById('themeBtn');
+        themeBtn.onclick = () => {
+            const html = document.documentElement;
+            const isDark = html.getAttribute('data-theme') === 'dark';
+            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+            themeBtn.textContent = isDark ? '🌙' : '☀️';
+        };
+
+        function toggleMenu(open) {
+            document.getElementById('sidebar').classList.toggle('open', open);
+            document.getElementById('overlay').classList.toggle('active', open);
+        }
+        document.getElementById('hamburgerBtn').onclick = () => toggleMenu(true);
+        document.getElementById('overlay').onclick = () => toggleMenu(false);
+
+        // ============================================================
+        // FORZAR FONDO BLANCO EN EL FAVICON (Dinámico)
+        // ============================================================
+        window.addEventListener('load', () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = 128;
+            canvas.height = 128;
+            const ctx = canvas.getContext('2d');
+            
+            // Dibujar un fondo blanco cuadrado
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, 128, 128);
+
+            const img = new Image();
+            img.onload = () => {
+                // Dibujar el logo encima con un poco de padding
+                ctx.drawImage(img, 12, 12, 104, 104);
+                const dataURL = canvas.toDataURL('image/png');
+                
+                // Actualizar los enlaces del favicon
+                document.getElementById('favicon1').href = dataURL;
+                document.getElementById('favicon1').type = 'image/png';
+                document.getElementById('favicon2').href = dataURL;
+                document.getElementById('favicon2').type = 'image/png';
+            };
+            img.src = 'logoNetAcad_Vertical.svg';
+        });
+
+        // ============================================================
+        // INICIALIZAR
+        // ============================================================
+        buildMenu();
+
+        // Abrir automáticamente el submenú del Módulo 1 al cargar
+        setTimeout(() => {
+            const mod1 = document.querySelector('.modulo-header:not(.module-disabled) .arrow');
+            if (mod1) {
+                const parent = mod1.closest('.modulo-header');
+                const sub = parent.parentElement.querySelector('.subitems');
+                if (sub) { sub.classList.add('open'); mod1.classList.add('down'); }
+            }
+        }, 200);
+    </script>
+</body>
+</html>
