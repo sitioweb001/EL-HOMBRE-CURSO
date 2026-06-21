@@ -876,7 +876,121 @@
                 respuesta_ampliada: 'Si no se puede virtualizar, se debe hacer una copia de seguridad completa del sistema para poder restaurarlo rápidamente.'
             },
 
-            // --- MÓDULO 2: Examen final (Nuevas agregadas) ---
+            // ============================================================
+            // MÓDULO 2 - EXAMEN FINAL (25 preguntas completas, 1 a 25)
+            // ============================================================
+
+            // Preguntas 1 a 6 (añadidas)
+            {
+                id: 'm2_e1', categoria: 'examen', modulo: 2, titulo: 'Pregunta 1 - HIPAA',
+                enunciado: 'Se contrata a un contratista para que revise y realice evaluaciones de vulnerabilidad a la ciberseguridad en las instalaciones de una clínica de salud local. ¿Qué regulación del gobierno de los EE. UU. debe comprender el contratista antes de que pueda comenzar?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'HIPAA', correcta: true },
+                    { texto: 'GLBA', correcta: false },
+                    { texto: 'FedRAMP', correcta: false },
+                    { texto: 'GDPR', correcta: false }
+                ],
+                respuesta: 'HIPAA',
+                explicacion_incorrectas: {
+                    'GLBA': 'Se aplica a instituciones financieras, no a clínicas de salud.',
+                    'FedRAMP': 'Es un estándar para servicios en la nube del gobierno federal de EE.UU., no para clínicas de salud privadas.',
+                    'GDPR': 'Es una regulación de la Unión Europea, no del gobierno de EE.UU.'
+                },
+                respuesta_ampliada: 'Una clínica de salud local es un proveedor de servicios de salud, por lo tanto, está cubierta por la regulación HIPAA (Ley de Transferibilidad y Responsabilidad del Seguro Médico), que protege la información médica electrónica (ePHI).'
+            },
+            {
+                id: 'm2_e2', categoria: 'examen', modulo: 2, titulo: 'Pregunta 2 - FedRAMP',
+                enunciado: 'Una oficina del Servicio de Impuestos Internos en Nueva York está considerando trasladar algunos servicios a una plataforma de computación en la nube. ¿Qué regulación del gobierno de los Estados Unidos debe seguir la oficina en el proceso?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'FFIEC', correcta: false },
+                    { texto: 'HIPAA', correcta: false },
+                    { texto: 'FedRAMP', correcta: true },
+                    { texto: 'GDPR', correcta: false }
+                ],
+                respuesta: 'FedRAMP',
+                explicacion_incorrectas: {
+                    'FFIEC': 'Es una guía para instituciones financieras, no para agencias gubernamentales como el IRS.',
+                    'HIPAA': 'Protege la información médica, no aplica al IRS.',
+                    'GDPR': 'Es una regulación de la Unión Europea, no del gobierno de EE.UU.'
+                },
+                respuesta_ampliada: 'El Servicio de Impuestos Internos (IRS) es una agencia del gobierno federal de los Estados Unidos. Por lo tanto, al considerar trasladar servicios a la nube, debe cumplir con FedRAMP, que es el estándar federal para autorizar y evaluar la seguridad de los servicios en la nube utilizados por agencias gubernamentales.'
+            },
+            {
+                id: 'm2_e3', categoria: 'examen', modulo: 2, titulo: 'Pregunta 3 - GDPR',
+                enunciado: 'Una universidad estadounidense en California planea ofrecer cursos en línea a estudiantes en universidades asociadas en Francia y Alemania. ¿Qué regulación debe seguir la universidad cuando se ofrecen esos cursos?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'FedRAMP', correcta: false },
+                    { texto: 'GDPR', correcta: true },
+                    { texto: 'HIPAA', correcta: false },
+                    { texto: 'FERPA', correcta: false }
+                ],
+                respuesta: 'GDPR',
+                explicacion_incorrectas: {
+                    'FedRAMP': 'Es para servicios en la nube del gobierno federal de EE.UU., no para universidades.',
+                    'HIPAA': 'Protege información médica, no aplica a cursos universitarios.',
+                    'FERPA': 'Es una ley de EE.UU. que protege la privacidad de los registros educativos de estudiantes en instituciones de EE.UU., pero no cubre específicamente la protección de datos de ciudadanos de la UE. El GDPR tiene un alcance más amplio para datos internacionales.'
+                },
+                respuesta_ampliada: 'Cuando una universidad estadounidense ofrece cursos a estudiantes en Francia y Alemania (países de la Unión Europea), está procesando y manejando datos personales de ciudadanos de la UE. Por lo tanto, debe cumplir con el GDPR (Reglamento General de Protección de Datos), que se aplica a cualquier organización que procese datos de personas dentro de la UE, independientemente de dónde esté ubicada la organización.'
+            },
+            {
+                id: 'm2_e4', categoria: 'examen', modulo: 2, titulo: 'Pregunta 4 - FTC',
+                enunciado: '¿Qué agencia del gobierno de los EE. UU. es responsable de aplicar la Regla de privacidad de la información financiera del consumidor de la Ley Gramm-Leach-Bliley (Ley GLB)?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Comisión de Bolsa y Valores (SEC)', correcta: false },
+                    { texto: 'Corporación federal de seguros de depósitos (FDIC)', correcta: false },
+                    { texto: 'Comisión Federal de Comercio (FTC)', correcta: true },
+                    { texto: 'Comisión de Comercio de Futuros de Productos Básicos (CFTC)', correcta: false }
+                ],
+                respuesta: 'Comisión Federal de Comercio (FTC)',
+                explicacion_incorrectas: {
+                    'SEC': 'Regula los mercados de valores y corredores de bolsa, no es la agencia principal para la aplicación de GLBA.',
+                    'FDIC': 'Supervisa bancos e instituciones de depósito, no es la agencia principal para la aplicación de GLBA en todos los sectores.',
+                    'CFTC': 'Regula los mercados de futuros y derivados, no es responsable de la aplicación de GLBA.'
+                },
+                respuesta_ampliada: 'La Comisión Federal de Comercio (FTC) es la agencia principal encargada de aplicar la GLBA para instituciones financieras no bancarias, según lo establecido en el módulo 2.1.2.'
+            },
+            {
+                id: 'm2_e5', categoria: 'examen', modulo: 2, titulo: 'Pregunta 5 - Cámara de compensación de servicios de salud',
+                enunciado: 'En el sector de servicios de salud, ¿qué término define una entidad que procesa información de salud no estándar que recibe de otra entidad en un formato estándar?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'cámara de compensación de servicios de salud', correcta: true },
+                    { texto: 'asociados de negocios', correcta: false },
+                    { texto: 'proveedor de atención médica', correcta: false },
+                    { texto: 'plan de salud', correcta: false }
+                ],
+                respuesta: 'cámara de compensación de servicios de salud',
+                explicacion_incorrectas: {
+                    'asociados de negocios': 'Son personas u organizaciones que realizan funciones o actividades que implican el uso de PHI en nombre de una entidad cubierta. No procesan información de formatos no estándar a estándar.',
+                    'proveedor de atención médica': 'Es una persona u organización que proporciona servicios médicos o para pacientes (médicos, clínicas, hospitales, etc.).',
+                    'plan de salud': 'Es una entidad que proporciona el pago de servicios médicos (compañías de seguros de salud, HMO, Medicare, Medicaid, etc.).'
+                },
+                respuesta_ampliada: 'Una cámara de compensación de servicios de salud (health care clearinghouse) procesa información no estándar y la convierte a formatos estándar. Es una de las entidades cubiertas por HIPAA.'
+            },
+            {
+                id: 'm2_e6', categoria: 'examen', modulo: 2, titulo: 'Pregunta 6 - Plan de salud',
+                enunciado: 'En el sector de los servicios de salud, ¿qué término se utiliza para definir una entidad que proporciona el pago por los servicios médicos?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'proveedor de atención médica', correcta: false },
+                    { texto: 'plan de salud', correcta: true },
+                    { texto: 'cámara de compensación de servicios de salud', correcta: false },
+                    { texto: 'asociados de negocios', correcta: false }
+                ],
+                respuesta: 'plan de salud',
+                explicacion_incorrectas: {
+                    'proveedor de atención médica': 'Es una persona u organización que proporciona servicios médicos (médicos, clínicas, hospitales), no paga por ellos.',
+                    'cámara de compensación de servicios de salud': 'Es una entidad que procesa información de salud no estándar a formatos estándar.',
+                    'asociados de negocios': 'Son personas u organizaciones que realizan funciones en nombre de una entidad cubierta que implican el uso de PHI.'
+                },
+                respuesta_ampliada: 'Un plan de salud es una entidad que proporciona el pago de servicios médicos, como compañías de seguros de salud, HMO, planes de salud gubernamentales o programas gubernamentales que pagan los servicios de salud, como Medicare, Medicaid, militares y programas para veteranos.'
+            },
+
+            // Preguntas 7 a 25 (ya existentes, las mantengo)
             {
                 id: 'm2_e7', categoria: 'examen', modulo: 2, titulo: 'Pregunta 7 - PCI DSS',
                 enunciado: 'En el comercio electronico, ¿que determina la aplicacion de los requisitos del Estandar de seguridad de datos de la industria de tarjetas de pago (PCI DSS)?',
