@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="light">
+<html lang="es" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -265,7 +265,7 @@
 
     <div class="top-controls">
         <button class="hamburger" id="hamburgerBtn">☰ Menú</button>
-        <button class="theme-toggle" id="themeBtn">🌙</button>
+        <button class="theme-toggle" id="themeBtn">☀️</button>
     </div>
 
     <nav class="sidebar" id="sidebar">
@@ -289,16 +289,16 @@
             
             <div class="news-grid">
                 <div class="news-card clickable" onclick="showQuestions(1, 'all')">
-                    <h3>🚀 Módulo 1: Introducción a la Piratería Ética y Pruebas de Penetración <span class="badge-new">¡ACTIVO!</span></h3>
-                    <p>Haz clic aquí para acceder a todas las prácticas, mini tests y el examen final de este módulo. ¡Pon a prueba tus conocimientos!</p>
+                    <h3>🚀 Módulo 1: Introducción a la Piratería Ética y Pruebas de Penetración</h3>
+                    <p>Accede a todas las prácticas, mini tests y el examen final de este módulo. ¡Pon a prueba tus conocimientos!</p>
+                </div>
+                <div class="news-card clickable" onclick="showQuestions(2, 'all')" style="border-color: var(--success); box-shadow: 0 4px 15px rgba(16,185,129,0.1);">
+                    <h3 style="color: var(--success);">🔥 Módulo 2: Planificación y Alcance <span class="badge-new">¡NUEVO!</span></h3>
+                    <p>Se ha añadido la recopilación de las preguntas del examen final de este módulo. ¡Haz clic para repasar las preguntas!</p>
                 </div>
                 <div class="news-card">
                     <h3>⏳ Próximos Módulos en Desarrollo</h3>
-                    <p>Los módulos del 2 al 10 (Planificación, Análisis de Vulnerabilidades, Ingeniería Social, etc.) se irán desbloqueando progresivamente a medida que avance el curso.</p>
-                </div>
-                <div class="news-card">
-                    <h3>📊 Estadísticas del Módulo 1</h3>
-                    <p><strong>30 preguntas</strong> disponibles: 5 verificaciones, 25 examen final. ¡Practica todas las veces que quieras!</p>
+                    <p>Los módulos del 3 al 10 se irán desbloqueando progresivamente a medida que avance el curso.</p>
                 </div>
             </div>
         </div>
@@ -324,12 +324,12 @@
 
     <script>
         // ============================================================
-        // DATOS DE PREGUNTAS (Módulo 1 - 30 preguntas)
+        // DATOS DE PREGUNTAS (Módulo 1 y Módulo 2)
         // ============================================================
         const preguntas = [
-            // --- Verificaciones (5) ---
+            // --- MÓDULO 1: Verificaciones (5) ---
             {
-                id: 'v1', categoria: 'verificacion', subcategoria: 'minitest',
+                id: 'v1', categoria: 'verificacion', subcategoria: 'minitest', modulo: 1,
                 titulo: 'Verificación - Bolsas de trabajo',
                 enunciado: '¿Qué tres bolsas de trabajo en Internet permiten filtrar las ofertas de trabajo por antigüedad o nivel de experiencia? (Escoja tres opciones.)',
                 tipo: 'multiple',
@@ -344,7 +344,7 @@
                 respuesta_ampliada: 'Las tres plataformas que sí permiten filtrar por nivel de experiencia son glassdoor.com, indeed.com y empleos en LinkedIn.com.'
             },
             {
-                id: 'v2', categoria: 'verificacion', subcategoria: 'practica',
+                id: 'v2', categoria: 'verificacion', subcategoria: 'practica', modulo: 1,
                 titulo: 'Práctica - Tipos de pruebas de penetración',
                 enunciado: 'Protego ha sido contratado para realizar una prueba de infraestructura de red. ¿A qué se enfocará? (Escoja tres opciones.)',
                 tipo: 'multiple',
@@ -363,7 +363,7 @@
                 respuesta_ampliada: 'Una prueba de infraestructura de red incluye conmutadores, IPS y servidores AAA, según el módulo 1.2.3.'
             },
             {
-                id: 'v3', categoria: 'verificacion', subcategoria: 'practica',
+                id: 'v3', categoria: 'verificacion', subcategoria: 'practica', modulo: 1,
                 titulo: 'Práctica - Requisitos laboratorio',
                 enunciado: '¿Qué procedimientos recomendados seguirá al configurar un laboratorio de pentesting? (Escoja tres opciones.)',
                 tipo: 'multiple',
@@ -384,7 +384,7 @@
                 respuesta_ampliada: 'Los tres requisitos correctos son: red cerrada, entorno virtualizado y suficientes recursos de hardware, según la tabla 1.3.2.'
             },
             {
-                id: 'v4', categoria: 'verificacion', subcategoria: 'practica',
+                id: 'v4', categoria: 'verificacion', subcategoria: 'practica', modulo: 1,
                 titulo: 'Práctica - Implementación de Kali (Verificación)',
                 enunciado: 'Acaba de instalar VirtualBox/UTM, inicia la app, pero no ve la VM de Kali. ¿Qué paso olvidaste?',
                 tipo: 'unica',
@@ -403,7 +403,7 @@
                 respuesta_ampliada: 'Olvidaste descargar e importar el archivo OVA (para VirtualBox) o el .utm (para UTM).'
             },
             {
-                id: 'v5', categoria: 'verificacion', subcategoria: 'practica',
+                id: 'v5', categoria: 'verificacion', subcategoria: 'practica', modulo: 1,
                 titulo: 'Práctica - Investigación de Kali (Verificación)',
                 enunciado: 'Inicias Kali y abres una terminal. ¿Qué devuelve el comando pwd?',
                 tipo: 'unica',
@@ -422,9 +422,9 @@
                 respuesta_ampliada: 'El directorio de inicio del usuario kali es /home/kali.'
             },
 
-            // --- Examen final (25 preguntas) ---
+            // --- MÓDULO 1: Examen final (25 preguntas) ---
             {
-                id: 'e1', categoria: 'examen', titulo: 'Pregunta 1 - Hacker ético',
+                id: 'e1', categoria: 'examen', modulo: 1, titulo: 'Pregunta 1 - Hacker ético',
                 enunciado: '¿Qué afirmación describe mejor el término hacker ético?',
                 tipo: 'unica',
                 opciones: [
@@ -442,7 +442,7 @@
                 respuesta_ampliada: 'Un hacker ético actúa como atacante con permiso para mejorar la seguridad.'
             },
             {
-                id: 'e2', categoria: 'examen', titulo: 'Pregunta 2 - Crimen organizado',
+                id: 'e2', categoria: 'examen', modulo: 1, titulo: 'Pregunta 2 - Crimen organizado',
                 enunciado: '¿Qué actor de amenazas es un grupo bien financiado que usa técnicas avanzadas para ganancias financieras?',
                 tipo: 'unica',
                 opciones: [
@@ -460,7 +460,7 @@
                 respuesta_ampliada: 'El crimen organizado busca monetizar sus ataques mediante ransomware, robo de datos, etc.'
             },
             {
-                id: 'e3', categoria: 'examen', titulo: 'Pregunta 3 - Hacktivista',
+                id: 'e3', categoria: 'examen', modulo: 1, titulo: 'Pregunta 3 - Hacktivista',
                 enunciado: '¿Qué actor roba datos y los revela públicamente para avergonzar?',
                 tipo: 'unica',
                 opciones: [
@@ -478,7 +478,7 @@
                 respuesta_ampliada: 'Los hacktivistas actúan por motivos políticos o sociales, robando y filtrando datos para avergonzar.'
             },
             {
-                id: 'e4', categoria: 'examen', titulo: 'Pregunta 4 - Ataque patrocinado por el estado',
+                id: 'e4', categoria: 'examen', modulo: 1, titulo: 'Pregunta 4 - Ataque patrocinado por el estado',
                 enunciado: '¿Qué es un ataque patrocinado por el estado?',
                 tipo: 'unica',
                 opciones: [
@@ -496,7 +496,7 @@
                 respuesta_ampliada: 'Los ataques patrocinados por el estado son llevados a cabo por gobiernos con fines de espionaje o guerra cibernética.'
             },
             {
-                id: 'e5', categoria: 'examen', titulo: 'Pregunta 5 - Amenaza interna',
+                id: 'e5', categoria: 'examen', modulo: 1, titulo: 'Pregunta 5 - Amenaza interna',
                 enunciado: '¿Qué es un ataque de amenaza interna?',
                 tipo: 'unica',
                 opciones: [
@@ -514,7 +514,7 @@
                 respuesta_ampliada: 'Las amenazas internas provienen de empleados o personas dentro de la organización, por malicia o error.'
             },
             {
-                id: 'e6', categoria: 'examen', titulo: 'Pregunta 6 - Pruebas basadas en aplicaciones',
+                id: 'e6', categoria: 'examen', modulo: 1, titulo: 'Pregunta 6 - Pruebas basadas en aplicaciones',
                 enunciado: '¿Qué debilidad evalúan las pruebas de penetración basadas en aplicaciones?',
                 tipo: 'unica',
                 opciones: [
@@ -532,7 +532,7 @@
                 respuesta_ampliada: 'Las pruebas basadas en aplicaciones evalúan fallas lógicas, configuraciones incorrectas, validación de entrada e inyección.'
             },
             {
-                id: 'e7', categoria: 'examen', titulo: 'Pregunta 7 - Recursos en infraestructura de red',
+                id: 'e7', categoria: 'examen', modulo: 1, titulo: 'Pregunta 7 - Recursos en infraestructura de red',
                 enunciado: '¿Qué dos recursos evalúa una prueba de infraestructura de red? (Elija dos)',
                 tipo: 'multiple',
                 opciones: [
@@ -551,7 +551,7 @@
                 respuesta_ampliada: 'La prueba de infraestructura de red incluye IPS y servidores AAA, además de conmutadores, routers y firewalls.'
             },
             {
-                id: 'e8', categoria: 'examen', titulo: 'Pregunta 8 - Recursos en pruebas de aplicaciones web',
+                id: 'e8', categoria: 'examen', modulo: 1, titulo: 'Pregunta 8 - Recursos en pruebas de aplicaciones web',
                 enunciado: 'Al probar una aplicación web, ¿qué recurso adicional se debe evaluar?',
                 tipo: 'unica',
                 opciones: [
@@ -569,7 +569,7 @@
                 respuesta_ampliada: 'Las aplicaciones web suelen tener una base de datos back-end, cuyo acceso debe ser probado.'
             },
             {
-                id: 'e9', categoria: 'examen', titulo: 'Pregunta 9 - Programas de recompensas por errores',
+                id: 'e9', categoria: 'examen', modulo: 1, titulo: 'Pregunta 9 - Programas de recompensas por errores',
                 enunciado: '¿Cuál es el propósito de los programas de recompensas por errores?',
                 tipo: 'unica',
                 opciones: [
@@ -587,7 +587,7 @@
                 respuesta_ampliada: 'Los programas de recompensas por errores (bug bounties) recompensan a los investigadores por encontrar y reportar vulnerabilidades de manera responsable.'
             },
             {
-                id: 'e10', categoria: 'examen', titulo: 'Pregunta 10 - Entorno parcialmente conocido',
+                id: 'e10', categoria: 'examen', modulo: 1, titulo: 'Pregunta 10 - Entorno parcialmente conocido',
                 enunciado: '¿Qué caracteriza a una prueba de penetración en un entorno parcialmente conocido?',
                 tipo: 'unica',
                 opciones: [
@@ -605,7 +605,7 @@
                 respuesta_ampliada: 'El entorno parcialmente conocido (caja gris) es híbrido: se dan algunas credenciales pero no documentación completa.'
             },
             {
-                id: 'e11', categoria: 'examen', titulo: 'Pregunta 11 - Entorno conocido',
+                id: 'e11', categoria: 'examen', modulo: 1, titulo: 'Pregunta 11 - Entorno conocido',
                 enunciado: '¿Qué caracteriza a una prueba de penetración en un entorno conocido?',
                 tipo: 'unica',
                 opciones: [
@@ -623,7 +623,7 @@
                 respuesta_ampliada: 'En entorno conocido (caja blanca), el evaluador recibe información completa de la organización.'
             },
             {
-                id: 'e12', categoria: 'examen', titulo: 'Pregunta 12 - Entorno desconocido',
+                id: 'e12', categoria: 'examen', modulo: 1, titulo: 'Pregunta 12 - Entorno desconocido',
                 enunciado: '¿Qué prueba solo proporciona información limitada como dominios e IPs?',
                 tipo: 'unica',
                 opciones: [
@@ -641,7 +641,7 @@
                 respuesta_ampliada: 'La prueba de entorno desconocido (caja negra) simula la perspectiva de un atacante externo con información mínima.'
             },
             {
-                id: 'e13', categoria: 'examen', titulo: 'Pregunta 13 - Emparejar metodologías',
+                id: 'e13', categoria: 'examen', modulo: 1, titulo: 'Pregunta 13 - Emparejar metodologías',
                 enunciado: 'Haga coincidir la metodología con la descripción.',
                 tipo: 'emparejamiento',
                 match: [
@@ -656,7 +656,7 @@
                 respuesta_ampliada: 'NIST SP 800-115 → pautas; MITRE ATT & CK → matrices de tácticas; OSSTMM → pruebas repetibles; PTES → tipos de ataques; OWASP WSTG → aplicaciones web.'
             },
             {
-                id: 'e14', categoria: 'examen', titulo: 'Pregunta 14 - Fases PTES',
+                id: 'e14', categoria: 'examen', modulo: 1, titulo: 'Pregunta 14 - Fases PTES',
                 enunciado: '¿Qué tres opciones son fases del PTES? (Escoja tres)',
                 tipo: 'multiple',
                 opciones: [
@@ -676,7 +676,7 @@
                 respuesta_ampliada: 'Las 7 fases del PTES son: Interacciones previas, inteligencia, modelado de amenazas, análisis de vulnerabilidades, explotación, post-explotación e informes.'
             },
             {
-                id: 'e15', categoria: 'examen', titulo: 'Pregunta 15 - Fases ISSAF',
+                id: 'e15', categoria: 'examen', modulo: 1, titulo: 'Pregunta 15 - Fases ISSAF',
                 enunciado: '¿Qué dos opciones son fases del ISSAF? (Elija dos)',
                 tipo: 'multiple',
                 opciones: [
@@ -695,7 +695,7 @@
                 respuesta_ampliada: 'Las fases de ISSAF incluyen: recopilación, mapeo de red, identificación de vulnerabilidades, penetración, acceso, más enumeración, comprometer usuarios, mantener acceso y cubrir pistas.'
             },
             {
-                id: 'e16', categoria: 'examen', titulo: 'Pregunta 16 - Fases OSSTMM',
+                id: 'e16', categoria: 'examen', modulo: 1, titulo: 'Pregunta 16 - Fases OSSTMM',
                 enunciado: '¿Qué dos opciones son fases del OSSTMM? (Elija dos)',
                 tipo: 'multiple',
                 opciones: [
@@ -711,10 +711,10 @@
                     'Mapeo de red': 'Es fase de ISSAF.',
                     'Mantener el acceso': 'Es fase de ISSAF.'
                 },
-                respuesta_ampliada: 'OSSTMM incluye: Métricas de seguridad operativa, Análisis de confianza, Flujo de trabajo, pruebas humanas, físicas, inalámbricas, telecomunicaciones, redes de datos, reglas de cumplimiento e informes STAR.'
+                respuesta_ampliada: 'OSSTMM incluye: Métricas de seguridad operativa, Análisis de confianza, Flujo de workflow, pruebas humanas, físicas, inalámbricas, telecomunicaciones, redes de datos, reglas de cumplimiento e informes STAR.'
             },
             {
-                id: 'e17', categoria: 'examen', titulo: 'Pregunta 17 - Metodología para aplicaciones web',
+                id: 'e17', categoria: 'examen', modulo: 1, titulo: 'Pregunta 17 - Metodología para aplicaciones web',
                 enunciado: '¿Qué metodología es una guía completa centrada en aplicaciones web?',
                 tipo: 'unica',
                 opciones: [
@@ -732,7 +732,7 @@
                 respuesta_ampliada: 'OWASP WSTG es la guía más completa para pruebas de seguridad de aplicaciones web.'
             },
             {
-                id: 'e18', categoria: 'examen', titulo: 'Pregunta 18 - Distribución Linux de pentesting',
+                id: 'e18', categoria: 'examen', modulo: 1, titulo: 'Pregunta 18 - Distribución Linux de pentesting',
                 enunciado: '¿Qué opción es una distribución de Linux con herramientas de pentesting?',
                 tipo: 'unica',
                 opciones: [
@@ -750,7 +750,7 @@
                 respuesta_ampliada: 'Las distribuciones Linux para pentesting incluyen Kali, Parrot OS y BlackArch.'
             },
             {
-                id: 'e19', categoria: 'examen', titulo: 'Pregunta 19 - URL de distribución Linux',
+                id: 'e19', categoria: 'examen', modulo: 1, titulo: 'Pregunta 19 - URL de distribución Linux',
                 enunciado: '¿Qué URL es de una distribución Linux para pentesting?',
                 tipo: 'unica',
                 opciones: [
@@ -768,7 +768,7 @@
                 respuesta_ampliada: 'Parrot OS es una distribución Linux para pentesting, su sitio es parrotsec.org.'
             },
             {
-                id: 'e20', categoria: 'examen', titulo: 'Pregunta 20 - Monitoreo de estado de salud',
+                id: 'e20', categoria: 'examen', modulo: 1, titulo: 'Pregunta 20 - Monitoreo de estado de salud',
                 enunciado: '¿Qué significa el requisito "Monitoreo del estado de salud" en un laboratorio?',
                 tipo: 'unica',
                 opciones: [
@@ -786,7 +786,7 @@
                 respuesta_ampliada: 'El monitoreo del estado de salud permite al evaluador saber por qué falló algo durante las pruebas.'
             },
             {
-                id: 'e21', categoria: 'examen', titulo: 'Pregunta 21 - Herramienta para infraestructura de red',
+                id: 'e21', categoria: 'examen', modulo: 1, titulo: 'Pregunta 21 - Herramienta para infraestructura de red',
                 enunciado: '¿Qué herramienta es útil para pruebas de infraestructura de red?',
                 tipo: 'unica',
                 opciones: [
@@ -804,7 +804,7 @@
                 respuesta_ampliada: 'Las herramientas para evitar cortafuegos e IPS son clave en infraestructura de red.'
             },
             {
-                id: 'e22', categoria: 'examen', titulo: 'Pregunta 22 - Herramienta para pruebas de aplicaciones',
+                id: 'e22', categoria: 'examen', modulo: 1, titulo: 'Pregunta 22 - Herramienta para pruebas de aplicaciones',
                 enunciado: '¿Qué herramienta se usa para pruebas basadas en aplicaciones?',
                 tipo: 'unica',
                 opciones: [
@@ -822,7 +822,7 @@
                 respuesta_ampliada: 'Los proxies de intercepción (Burp Suite) son fundamentales para pruebas de aplicaciones web.'
             },
             {
-                id: 'e23', categoria: 'examen', titulo: 'Pregunta 23 - Herramientas para infraestructura inalámbrica',
+                id: 'e23', categoria: 'examen', modulo: 1, titulo: 'Pregunta 23 - Herramientas para infraestructura inalámbrica',
                 enunciado: '¿Qué herramientas se usan para pruebas inalámbricas?',
                 tipo: 'unica',
                 opciones: [
@@ -840,7 +840,7 @@
                 respuesta_ampliada: 'Las pruebas inalámbricas usan herramientas para descifrar cifrado, desautorizar dispositivos y ataques MITM.'
             },
             {
-                id: 'e24', categoria: 'examen', titulo: 'Pregunta 24 - Herramientas para servidor/cliente',
+                id: 'e24', categoria: 'examen', modulo: 1, titulo: 'Pregunta 24 - Herramientas para servidor/cliente',
                 enunciado: '¿Qué herramientas se usan para probar plataformas servidor y cliente?',
                 tipo: 'unica',
                 opciones: [
@@ -858,7 +858,7 @@
                 respuesta_ampliada: 'Los escáneres de vulnerabilidades automatizados identifican software desactualizado y configuraciones incorrectas.'
             },
             {
-                id: 'e25', categoria: 'examen', titulo: 'Pregunta 25 - Sistema no virtualizable',
+                id: 'e25', categoria: 'examen', modulo: 1, titulo: 'Pregunta 25 - Sistema no virtualizable',
                 enunciado: 'Si no se puede virtualizar un sistema, ¿qué medida se debe tomar?',
                 tipo: 'unica',
                 opciones: [
@@ -874,6 +874,293 @@
                     'Usar herramientas que no dañen': 'Las herramientas pueden dañar, no hay garantía.'
                 },
                 respuesta_ampliada: 'Si no se puede virtualizar, se debe hacer una copia de seguridad completa del sistema para poder restaurarlo rápidamente.'
+            },
+
+            // --- MÓDULO 2: Examen final (Nuevas agregadas) ---
+            {
+                id: 'm2_e7', categoria: 'examen', modulo: 2, titulo: 'Pregunta 7 - PCI DSS',
+                enunciado: 'En el comercio electronico, ¿que determina la aplicacion de los requisitos del Estandar de seguridad de datos de la industria de tarjetas de pago (PCI DSS)?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'proveedor de escaneo aprobado', correcta: false },
+                    { texto: 'número de cuenta principal', correcta: true },
+                    { texto: 'marca de pago', correcta: false },
+                    { texto: 'comerciante', correcta: false }
+                ],
+                respuesta: 'número de cuenta principal',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'El Número de Cuenta Principal (PAN) es el factor crítico que define la aplicabilidad de los requisitos de PCI DSS.'
+            },
+            {
+                id: 'm2_e8', categoria: 'examen', modulo: 2, titulo: 'Pregunta 8 - Datos de autenticación confidenciales',
+                enunciado: '¿Cuáles son dos ejemplos de datos de autenticacion confidenciales asociados con una tarjeta de pago que requieren el cumplimiento del Estándar de seguridad de datos de la industria de tarjetas de pago (PCI DSS)? (Elija dos opciones.)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'Fecha de vencimiento', correcta: false },
+                    { texto: 'Nombre del titular', correcta: false },
+                    { texto: 'Número de cuenta principal', correcta: false },
+                    { texto: 'CAV2/ CVC2 / CVV2 / CID', correcta: true },
+                    { texto: 'Datos completos de la banda magnetica o datos equivalentes en un chip', correcta: true }
+                ],
+                respuesta: 'CAV2/ CVC2 / CVV2 / CID, Datos completos de la banda magnetica o datos equivalentes en un chip',
+                explicacion_incorrectas: {
+                    'Fecha de vencimiento': 'Datos del titular, no de autenticación confidencial.',
+                    'Nombre del titular': 'Datos del titular.',
+                    'Número de cuenta principal': 'Datos del titular.'
+                },
+                respuesta_ampliada: 'Los códigos de seguridad de las tarjetas y los datos de la banda magnética/chip pertenecen estrictamente a la categoría de datos de autenticación confidenciales.'
+            },
+            {
+                id: 'm2_e9', categoria: 'examen', modulo: 2, titulo: 'Pregunta 9 - NIST SP 800-57',
+                enunciado: 'Haga coincidir las partes de Recomendación para la administración de claves en NIST SP 800-57 con la descripción.',
+                tipo: 'emparejamiento',
+                match: [
+                    { metodo: 'Parte 1: General', descripcion: 'Proporciona orientación general y procedimientos recomendados para la administración de material de claves criptográficas' },
+                    { metodo: 'Parte 2: Procedimientos recomendados...', descripcion: 'Proporciona orientación sobre los requisitos de planificación de políticas y seguridad para las agencias gubernamentales de EE. UU' },
+                    { metodo: 'Parte 3: Orientación para la administración...', descripcion: 'Proporciona orientación al utilizar las funciones criptográficas de los sistemas actuales' }
+                ],
+                respuesta: 'Tabla de coincidencias (Ver en pantalla)',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'Basado en la sección 2.1.2 sobre las recomendaciones de administración de claves de la publicación NIST SP 800-57.'
+            },
+            {
+                id: 'm2_e10', categoria: 'examen', modulo: 2, titulo: 'Pregunta 10 - Permisos de prueba',
+                enunciado: 'Se asigna a un empleado... pruebas de penetracion para verificar el cumplimiento en Europa. ¿Cual es el elemento clave que debe tener el empleado antes de comenzar la asignacion?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'diagramas de red detallados e inventarios de activos de cada institucion cliente', correcta: false },
+                    { texto: 'herramientas de prueba de penetracion de ultima generacion', correcta: false },
+                    { texto: 'credenciales de usuario válidas para realizar pruebas en cada institución cliente', correcta: false },
+                    { texto: 'documentacion de permisos para realizar las pruebas de las instituciones del cliente', correcta: true }
+                ],
+                respuesta: 'documentacion de permisos para realizar las pruebas de las instituciones del cliente',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'Siempre se debe tener autorización por escrito firmada por una autoridad adecuada antes de cualquier interacción técnica para evitar problemas legales.'
+            },
+            {
+                id: 'm2_e11', categoria: 'examen', modulo: 2, titulo: 'Pregunta 11 - SLA',
+                enunciado: '¿Que documento legal debe proporcionarse al profesional de ciberseguridad que especifique las expectativas y las restricciones, incluida la calidad del trabajo, los plazos y el costo?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Acuerdo de nivel de servicio (SLA)', correcta: true },
+                    { texto: 'Acuerdo de no divulgacion (NDA)', correcta: false },
+                    { texto: 'Acuerdo de servicio maestro (MSA)', correcta: false },
+                    { texto: 'Declaracion de trabajo (sow)', correcta: false }
+                ],
+                respuesta: 'Acuerdo de nivel de servicio (SLA)',
+                explicacion_incorrectas: {
+                    'Declaracion de trabajo (sow)': 'Especifica actividades y alcance, pero no las expectativas de rendimiento estrictas como la calidad.'
+                },
+                respuesta_ampliada: 'El SLA define las expectativas de rendimiento mínimas y máximas (como calidad, plazo estricto y costo asociado a penalizaciones).'
+            },
+            {
+                id: 'm2_e12', categoria: 'examen', modulo: 2, titulo: 'Pregunta 12 - Declaración de trabajo (SOW)',
+                enunciado: '¿Qué documento se proporcionará al profesional de ciberseguridad que especifique una lista detallada y descriptiva de todos los entregables, incluido el alcance del proyecto, la linea de tiempo y el cronograma de entrega de informes, la ubicación del trabajo y el cronograma de pagos?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Acuerdo de servicio maestro (MSA)', correcta: false },
+                    { texto: 'Acuerdo de no divulgación (NDA)', correcta: false },
+                    { texto: 'Acuerdo de nivel de servicio (SLA)', correcta: false },
+                    { texto: 'Declaración de trabajo (SOW)', correcta: true }
+                ],
+                respuesta: 'Declaración de trabajo (SOW)',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'La SOW es el documento operativo maestro que entra en el detalle descriptivo de todas las actividades a realizar, el alcance y los cronogramas.'
+            },
+            {
+                id: 'm2_e13', categoria: 'examen', modulo: 2, titulo: 'Pregunta 13 - NDA',
+                enunciado: 'La empresa quiere que el consultor le revele informacion a ella y a nadie mas. ¿Que tipo de acuerdo de NDA se debe presentar al consultor?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'NDA unilateral', correcta: true },
+                    { texto: 'NDA mutuo', correcta: false },
+                    { texto: 'ADN multilateral', correcta: false },
+                    { texto: 'NDA bilateral', correcta: false }
+                ],
+                respuesta: 'NDA unilateral',
+                explicacion_incorrectas: {
+                    'NDA mutuo / bilateral': 'Se usaría si ambas partes fueran a compartir información confidencial entre sí.'
+                },
+                respuesta_ampliada: 'Como la restricción de confidencialidad recae únicamente sobre el consultor para proteger a la empresa, el acuerdo es unilateral.'
+            },
+            {
+                id: 'm2_e14', categoria: 'examen', modulo: 2, titulo: 'Pregunta 14 - Contrato',
+                enunciado: '¿Que documento debe recibir el consultor que especifica el acuerdo entre el consultor y la empresa para el compromiso de las pruebas de penetración?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'declaración de trabajo', correcta: false },
+                    { texto: 'renuncia de responsabilidad', correcta: false },
+                    { texto: 'contrato', correcta: true },
+                    { texto: 'acuerdo de no divulgación', correcta: false }
+                ],
+                respuesta: 'contrato',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'El contrato es el documento legal general que formaliza el acuerdo y la relación comercial entre el consultor y la empresa.'
+            },
+            {
+                id: 'm2_e15', categoria: 'examen', modulo: 2, titulo: 'Pregunta 15 - Limitación del trabajo',
+                enunciado: 'El consultor esta preparando el informe final... ¿En qué seccion del informe debe el consultor cubrir la limitacion del trabajo realizado, como las únicas fechas en que se realizan las pruebas y que los hallazgos mencionados en el informe no garantizan que se cubran todas las vulnerabilidades?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'acuerdo de no divulgación', correcta: false },
+                    { texto: 'renuncia de responsabilidad', correcta: true },
+                    { texto: 'hallazgos y análisis', correcta: false },
+                    { texto: 'alcance del trabajo', correcta: false }
+                ],
+                respuesta: 'renuncia de responsabilidad',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'La renuncia de responsabilidad (disclaimer) aclara los límites del trabajo y declara que no se garantiza la ausencia de otras vulnerabilidades más allá del tiempo estipulado.'
+            },
+            {
+                id: 'm2_e16', categoria: 'examen', modulo: 2, titulo: 'Pregunta 16 - Reglas de participación',
+                enunciado: '¿Cuáles son tres ejemplos de elementos típicos en el documento de reglas de participación? (Escoja tres opciones.)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'calendario de pagos', correcta: false },
+                    { texto: 'método preferido de comunicación', correcta: true },
+                    { texto: 'acuerdo de no divulgación', correcta: false },
+                    { texto: 'condición de prueba de entorno desconocido', correcta: true },
+                    { texto: 'lugar de la prueba', correcta: true }
+                ],
+                respuesta: 'método preferido de comunicación, condición de prueba de entorno desconocido, lugar de la prueba',
+                explicacion_incorrectas: {
+                    'calendario de pagos': 'Pertenece a la SOW.',
+                    'acuerdo de no divulgación': 'Es un contrato legal independiente (NDA).'
+                },
+                respuesta_ampliada: 'El documento de Reglas de Participación (RoE) define pautas técnicas y operativas bajo las cuales se ejecutarán las pruebas.'
+            },
+            {
+                id: 'm2_e17', categoria: 'examen', modulo: 2, titulo: 'Pregunta 17 - Restricciones de pruebas',
+                enunciado: 'El consultor observa que un elemento especifica que las pruebas deben realizarse solo para las aplicaciones web de los sitios... sin ataques de ingenieria social ni ataques de secuencias de comandos entre sitios. ¿Qué elemento del documento se utiliza para la especificación?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'tipos de pruebas permitidas o no permitidas', correcta: true },
+                    { texto: 'los controles de seguridad que potencialmente podrian detectar o evitar las pruebas', correcta: false },
+                    { texto: 'direcciones IP o redes desde las que se originaran las pruebas', correcta: false },
+                    { texto: 'lugar de la prueba', correcta: false }
+                ],
+                respuesta: 'tipos de pruebas permitidas o no permitidas',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'Esta sección delimita las acciones y vectores de ataque que el auditor tiene autorización técnica y legal de ejecutar.'
+            },
+            {
+                id: 'm2_e18', categoria: 'examen', modulo: 2, titulo: 'Pregunta 18 - WSDL',
+                enunciado: '¿Que documento debe proporcionar la empresa al consultor sobre un lenguaje basado en XML utilizado para documentar la funcionalidad de un servicio web?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Documentación de Swagger (OpenAPI)', correcta: false },
+                    { texto: 'Documento de lenguaje de descripción de aplicaciones web (WADL)', correcta: false },
+                    { texto: 'Documento de lenguaje de descripción de servicios web (WSDL)', correcta: true },
+                    { texto: 'Documentacion de GraphQL', correcta: false }
+                ],
+                respuesta: 'Documento de lenguaje de descripción de servicios web (WSDL)',
+                explicacion_incorrectas: {
+                    'Documentación de Swagger (OpenAPI)': 'Es un estándar para REST usando JSON o YAML.',
+                    'Documento de lenguaje de descripción de aplicaciones web (WADL)': 'Diseñado para servicios REST basados en XML, no SOAP tradicional.'
+                },
+                respuesta_ampliada: 'El WSDL es un estándar XML utilizado específicamente para describir y documentar la funcionalidad de un servicio web tradicional (SOAP).'
+            },
+            {
+                id: 'm2_e19', categoria: 'examen', modulo: 2, titulo: 'Pregunta 19 - GraphQL',
+                enunciado: '¿Que documento debe proporcionar la empresa al consultor sobre un lenguaje de consulta para API y un lenguaje para ejecutar consultas en tiempo de ejecucion?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Documento de lenguaje de descripción de aplicaciones web (WADL)', correcta: false },
+                    { texto: 'Documentacion de Swagger (OpenAPI)', correcta: false },
+                    { texto: 'Documentacion de GraphQL', correcta: true },
+                    { texto: 'Documento de lenguaje de descripción de servicios web (WSDL)', correcta: false }
+                ],
+                respuesta: 'Documentacion de GraphQL',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'GraphQL se define precisamente como un lenguaje de consulta para las API y un entorno de ejecución (runtime) para dar respuesta a esas consultas.'
+            },
+            {
+                id: 'm2_e20', categoria: 'examen', modulo: 2, titulo: 'Pregunta 20 - Diagrama de arquitectura',
+                enunciado: '¿Que documento debe proporcionar la empresa para ayudar al consultor a documentar y definir que sistemas se encuentran en la prueba?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'diagrama de la arquitectura del sistema y de la red', correcta: true },
+                    { texto: 'códigos fuente de las aplicaciones', correcta: false },
+                    { texto: 'kit de desarrollo de software (SDK) para aplicaciones específicas', correcta: false },
+                    { texto: 'ejemplos de solicitudes de aplicaciones', correcta: false }
+                ],
+                respuesta: 'diagrama de la arquitectura del sistema y de la red',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'Proporciona un mapa estructural que permite delimitar visualmente qué activos están dentro de la prueba y cómo fluyen los datos entre ellos.'
+            },
+            {
+                id: 'm2_e21', categoria: 'examen', modulo: 2, titulo: 'Pregunta 21 - Aumento del alcance',
+                enunciado: '¿Que puede causar el aumento del alcance del compromiso?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'falta de diagramas de la arquitectura del sistema y de la red', correcta: false },
+                    { texto: 'identificacion ineficaz de qué elementos técnicos y no técnicos se requerirán para la prueba de penetración', correcta: true },
+                    { texto: 'falta de herramientas de prueba actualizadas', correcta: false },
+                    { texto: 'solicitud de propuesta (RFP) con formato deficiente por parte de la empresa', correcta: false }
+                ],
+                respuesta: 'identificacion ineficaz de qué elementos técnicos y no técnicos se requerirán...',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'El aumento del alcance (scope creep) ocurre comúnmente cuando hay una identificación ineficaz o deficiente de los requerimientos desde el principio de la planificación.'
+            },
+            {
+                id: 'm2_e22', categoria: 'examen', modulo: 2, titulo: 'Pregunta 22 - Validar el alcance',
+                enunciado: '¿Cual deberia ser el primer paso del consultor para validar el alcance del compromiso?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Solicitar credenciales de usuario para acceder a los sistemas de destino.', correcta: false },
+                    { texto: 'Asegúrese de que los diagramas de arquitectura de sistemas y redes sean precisos.', correcta: false },
+                    { texto: 'Confirmar el contenido de la solicitud de propuesta (RFP).', correcta: false },
+                    { texto: 'Preguntar a la persona de contacto de la empresa y revise los contratos.', correcta: true }
+                ],
+                respuesta: 'Preguntar a la persona de contacto de la empresa y revise los contratos.',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'El primer paso fundamental para alinear expectativas es la comunicación directa con el contacto y la revisión de contratos firmados.'
+            },
+            {
+                id: 'm2_e23', categoria: 'examen', modulo: 2, titulo: 'Pregunta 23 - Correos seguros',
+                enunciado: '¿Que dos protocolos deben considerarse para intercambiar correos electronicos de forma segura? (Elija dos opciones.)',
+                tipo: 'multiple',
+                opciones: [
+                    { texto: 'SFTP', correcta: false },
+                    { texto: 'SCP', correcta: false },
+                    { texto: 'PGP', correcta: true },
+                    { texto: 'HTTPS', correcta: false },
+                    { texto: 'S/MIME', correcta: true }
+                ],
+                respuesta: 'PGP, S/MIME',
+                explicacion_incorrectas: {
+                    'SFTP y SCP': 'Son para transferencia segura de archivos, no el cifrado de correos.',
+                    'HTTPS': 'Es para navegación web segura.'
+                },
+                respuesta_ampliada: 'PGP y S/MIME son los estándares criptográficos utilizados específicamente para garantizar la seguridad en correos electrónicos de extremo a extremo.'
+            },
+            {
+                id: 'm2_e24', categoria: 'examen', modulo: 2, titulo: 'Pregunta 24 - Entorno desconocido',
+                enunciado: '¿Que afirmacion describe el termino prueba en entorno desconocido?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'Este es un tipo de prueba donde el marco de tiempo del trabajo puede ser flexible y la extensión es posible.', correcta: false },
+                    { texto: 'Este es un tipo de prueba donde el alcance del trabajo podría ampliarse mas adelante.', correcta: false },
+                    { texto: 'Este es un tipo de prueba en la que el presupuesto se puede negociar a lo largo de la prueba.', correcta: false },
+                    { texto: 'Este tipo de prueba es donde el consultor recibira informacion muy limitada sobre los sistemas y la red objetivo.', correcta: true }
+                ],
+                respuesta: 'Este tipo de prueba es donde el consultor recibira informacion muy limitada sobre los sistemas y la red objetivo.',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'Conocida como prueba de caja negra (black box), el consultor tiene conocimiento nulo o muy limitado, emulando la perspectiva de un atacante real.'
+            },
+            {
+                id: 'm2_e25', categoria: 'examen', modulo: 2, titulo: 'Pregunta 25 - Diferencia de entornos',
+                enunciado: '¿Cual es la diferencia clave entre las pruebas de entorno desconocido y las pruebas de entorno conocido?',
+                tipo: 'unica',
+                opciones: [
+                    { texto: 'las herramientas y los tipos de pruebas permitidas durante las pruebas', correcta: false },
+                    { texto: 'la cantidad de informacion proporcionada al consultor', correcta: true },
+                    { texto: 'los tipos de sistemas y redes que se probaran', correcta: false },
+                    { texto: 'credenciales y certificados requeridos del consultor', correcta: false }
+                ],
+                respuesta: 'la cantidad de informacion proporcionada al consultor',
+                explicacion_incorrectas: {},
+                respuesta_ampliada: 'Entorno desconocido (Caja negra) = información nula/limitada. Entorno conocido (Caja blanca) = información detallada y completa sobre el objetivo.'
             }
         ];
 
@@ -882,7 +1169,7 @@
         // ============================================================
         const modulos = [
             { numero: 1, nombre: 'Introducción a la Piratería Ética y las Pruebas de Penetración', tieneDatos: true },
-            { numero: 2, nombre: 'Planificación y Alcance de una Evaluación de Pruebas de Penetración', tieneDatos: false },
+            { numero: 2, nombre: 'Planificación y Alcance de una Evaluación de Pruebas de Penetración', tieneDatos: true },
             { numero: 3, nombre: 'Recopilación de Información y Análisis de Vulnerabilidades', tieneDatos: false },
             { numero: 4, nombre: 'Ataques de Ingeniería Social', tieneDatos: false },
             { numero: 5, nombre: 'Explotando Redes Cableadas e Inalámbricas', tieneDatos: false },
@@ -980,17 +1267,21 @@
                               filtro === 'examen' ? 'Examen final' : 'Mini tests';
             
             moduleTitle.innerHTML = `Módulo ${numModulo} <span style="font-size:1.2rem; color:var(--text-muted); font-weight:500;">- ${txtFiltro}</span>`;
-            renderPreguntas(filtro);
+            renderPreguntas(filtro, numModulo);
         }
 
         // ============================================================
         // RENDERIZAR PREGUNTAS
         // ============================================================
-        function renderPreguntas(filtro) {
+        function renderPreguntas(filtro, numModulo) {
             const container = document.getElementById('questionsContainer');
             container.innerHTML = '';
             
-            let filtered = filtro === 'all' ? preguntas : preguntas.filter(p => p.categoria === filtro || p.subcategoria === filtro);
+            // Filtrar primero por el módulo seleccionado, y luego por el tipo de prueba
+            let filtered = preguntas.filter(p => p.modulo === numModulo);
+            if (filtro !== 'all') {
+                filtered = filtered.filter(p => p.categoria === filtro || p.subcategoria === filtro);
+            }
 
             if (filtered.length === 0) {
                 container.innerHTML = '<p style="padding:40px; text-align:center; background:var(--card-bg); border-radius:12px; border:1px solid var(--border-color);">No hay preguntas disponibles para este filtro.</p>';
@@ -1089,47 +1380,59 @@
         document.getElementById('overlay').onclick = () => toggleMenu(false);
 
         // ============================================================
-        // FORZAR FONDO BLANCO EN EL FAVICON (Dinámico)
+        // MEJORA: APLICAR FONDO BLANCO AL FAVICON (Método avanzado)
         // ============================================================
         window.addEventListener('load', () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = 128;
-            canvas.height = 128;
-            const ctx = canvas.getContext('2d');
-            
-            // Dibujar un fondo blanco cuadrado
-            ctx.fillStyle = '#ffffff';
-            ctx.fillRect(0, 0, 128, 128);
+            // Intentar cargar el SVG, agregarle fondo blanco y pasarlo a Blob
+            fetch('logoNetAcad_Vertical.svg')
+                .then(response => response.text())
+                .then(svgText => {
+                    if (svgText.includes('<svg')) {
+                        // Modificar el SVG original para que tenga fondo blanco y padding
+                        const modifiedSvg = svgText.replace(
+                            '<svg', 
+                            '<svg style="background-color: #ffffff; border-radius: 6px; padding: 4px;"'
+                        );
+                        const blob = new Blob([modifiedSvg], { type: 'image/svg+xml' });
+                        const url = URL.createObjectURL(blob);
+                        
+                        document.getElementById('favicon1').href = url;
+                        document.getElementById('favicon2').href = url;
+                    }
+                })
+                .catch(() => {
+                    // Fallback: Método antiguo con Canvas si falla el Fetch (p. ej. al abrir sin servidor local)
+                    const canvas = document.createElement('canvas');
+                    canvas.width = 128;
+                    canvas.height = 128;
+                    const ctx = canvas.getContext('2d');
+                    
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(0, 0, 128, 128);
 
-            const img = new Image();
-            img.onload = () => {
-                // Dibujar el logo encima con un poco de padding
-                ctx.drawImage(img, 12, 12, 104, 104);
-                const dataURL = canvas.toDataURL('image/png');
-                
-                // Actualizar los enlaces del favicon
-                document.getElementById('favicon1').href = dataURL;
-                document.getElementById('favicon1').type = 'image/png';
-                document.getElementById('favicon2').href = dataURL;
-                document.getElementById('favicon2').type = 'image/png';
-            };
-            img.src = 'logoNetAcad_Vertical.svg';
+                    const img = new Image();
+                    img.onload = () => {
+                        ctx.drawImage(img, 12, 12, 104, 104);
+                        try {
+                            const dataURL = canvas.toDataURL('image/png');
+                            document.getElementById('favicon1').href = dataURL;
+                            document.getElementById('favicon1').type = 'image/png';
+                            document.getElementById('favicon2').href = dataURL;
+                            document.getElementById('favicon2').type = 'image/png';
+                        } catch (e) {
+                            console.warn("No se pudo aplicar el fondo blanco al favicon por restricciones de seguridad (file://).");
+                        }
+                    };
+                    img.src = 'logoNetAcad_Vertical.svg';
+                });
         });
 
         // ============================================================
         // INICIALIZAR
         // ============================================================
         buildMenu();
-
-        // Abrir automáticamente el submenú del Módulo 1 al cargar
-        setTimeout(() => {
-            const mod1 = document.querySelector('.modulo-header:not(.module-disabled) .arrow');
-            if (mod1) {
-                const parent = mod1.closest('.modulo-header');
-                const sub = parent.parentElement.querySelector('.subitems');
-                if (sub) { sub.classList.add('open'); mod1.classList.add('down'); }
-            }
-        }, 200);
+        
+        // (Eliminado el setTimeout que abría automáticamente los módulos)
     </script>
 </body>
 </html>
